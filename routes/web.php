@@ -6,6 +6,7 @@ use App\Http\Controllers\AttachmentController;
 use App\Http\Controllers\CategoryController;
 use App\Http\Controllers\ChatController;
 use App\Http\Controllers\CommentController;
+use App\Http\Controllers\DashboardController;
 use App\Http\Controllers\MailController;
 use App\Http\Controllers\SendMessageController;
 use App\Http\Controllers\TicketController;
@@ -111,7 +112,7 @@ Route::middleware('auth')->group(function () {
 Route::middleware('auth')->group(function () {
 
     Route::resource('chatRooms', ChatController::class)->only(['index', 'show']);
-    
+
 Route::post('/chat-rooms/{chatRoom}/send-message', [ChatController::class, 'sendMessage'])->name('send-message');
 
     Route::post('send-message', SendMessageController::class)->name('send-message');
@@ -119,5 +120,5 @@ Route::post('/chat-rooms/{chatRoom}/send-message', [ChatController::class, 'send
 
     Route::get('/chat-rooms', [ChatController::class, 'index'])->name('chat.index');
     Route::get('/chat-rooms/{chat-room}', [ChatController::class, 'show'])->name('chat.show');
-    
+    Route::get('/dashboard', [DashboardController::class, 'index'])->middleware(['auth', 'verified'])->name('dashboard');
 });
