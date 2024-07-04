@@ -15,6 +15,8 @@ class DashboardController extends Controller
 		$totalUsers = User::count();
 		$totalCategories = Category::count();
         $totalTicketsSolved = Ticket::where('status', 'closed')->count();
+        $totalTicketsOpen = Ticket::where('status', 'open')->count();
+        $totalTicketsInProgress = Ticket::where('status', 'in_progress')->count();
 		$totalTickets = Ticket::count();
 
 		return Inertia::render('Dashboard', [
@@ -22,6 +24,8 @@ class DashboardController extends Controller
             'totalCategories' => $totalCategories,
             'totalTickets' => $totalTickets,
             'totalTicketsSolved' => $totalTicketsSolved,
+            'totalTicketsOpen' => $totalTicketsOpen,
+            'totalTicketsInProgress' => $totalTicketsInProgress,
         ]);
 	}
 }
