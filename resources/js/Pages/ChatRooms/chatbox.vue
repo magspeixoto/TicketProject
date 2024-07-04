@@ -94,7 +94,7 @@ onMounted(() => {
 <script>
 const authId = '{{ auth()->id() }}'
 const uniqueId = '{{ uniqid() }}'
-const sendMessageRoute = '{{ route('send-message') }}'
+const sendMessageRoute = route('send-message');
 </script>
 
 <style scoped>

@@ -8,7 +8,7 @@
 
     <div class="py-12">
       <div class="max-w-7xl mx-auto sm:px-6 lg:px-40">
-        <div class="bg-white dark:bg-gray-800 overflow-hidden shadow-sm sm:rounded-lg">
+        <div class="bg-white dark:bg-gray-900 overflow-hidden shadow-sm sm:rounded-lg">
           <div class="p-6 text-gray-900 dark:text-gray-100">
             <table class="w-full">
               <thead>
@@ -28,7 +28,7 @@
                   <td class="border px-4 py-2">{{ chatRoom.updated_at }}</td>
                   <td class="border px-4 py-2">
                     <a :href="`/chatRooms/${chatRoom.id}`"
-                       class="bg-blue-500 hover:bg-blue-700 text-white font-bold py-2 px-4 rounded">View</a>
+                       class="bg-blue-600 hover:bg-blue-700 text-white font-bold py-2 px-4 rounded">View</a>
                   </td>
                 </tr>
               </tbody>
