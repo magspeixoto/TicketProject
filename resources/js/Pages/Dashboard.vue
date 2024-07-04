@@ -14,6 +14,10 @@ defineProps({
 		type: Number,
 		default: 0,
 	},
+    totalTicketsSolved: {
+        type: Number,
+        default: 0,
+    }
 })
 </script>
 
@@ -66,6 +70,19 @@ defineProps({
 
 						<div class="text-3xl font-semibold tracking-tight text-gray-950">
 							{{ totalTickets }}
+						</div>
+					</div>
+				</div>
+                <div class="relative p-6 bg-white shadow-sm fi-wi-stats-overview-stat rounded-xl ring-1 ring-gray-950/5">
+					<div class="grid gap-y-2">
+						<div class="flex items-center gap-x-2">
+							<span class="text-sm font-medium text-gray-500 dark:text-gray-400">
+								Total Tickets Closed
+							</span>
+						</div>
+
+						<div class="text-3xl font-semibold tracking-tight text-gray-950">
+							{{ totalTicketsSolved }}
 						</div>
 					</div>
 				</div>

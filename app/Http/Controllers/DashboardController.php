@@ -14,12 +14,14 @@ class DashboardController extends Controller
 	{
 		$totalUsers = User::count();
 		$totalCategories = Category::count();
+        $totalTicketsSolved = Ticket::where('status', 'closed')->count();
 		$totalTickets = Ticket::count();
 
 		return Inertia::render('Dashboard', [
             'totalUsers' => $totalUsers,
             'totalCategories' => $totalCategories,
             'totalTickets' => $totalTickets,
+            'totalTicketsSolved' => $totalTicketsSolved,
         ]);
 	}
 }
