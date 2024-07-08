@@ -60,11 +60,16 @@ Route::middleware(['auth'])->group(function () {
     Route::put('/articles/{article}', [ArticleController::class, 'update'])->name('articles.update');
     Route::delete('/articles/{article}', [ArticleController::class, 'destroy'])->name('articles.destroy');
 
+    Route::get('/usersManagement', [UserManagementController::class, 'index'])->name('usersManagement.index');
+    Route::get('/usersManagement/create', [UserManagementController::class, 'create'])->name('usersManagement.create');
+    Route::post('/usersManagement', [UserManagementController::class, 'store'])->name('usersManagement.store');
+    Route::get('/usersManagement/{user}/edit', [UserManagementController::class, 'edit'])->name('usersManagement.edit');
+    Route::put('/usersManagement/{user}', [UserManagementController::class, 'update'])->name('usersManagement.update');
+    Route::delete('/usersManagement/{user}', [UserManagementController::class, 'destroy'])->name('usersManagement.destroy');
+
  });
  Route::resource('tickets', TicketController::class);
  Route::resource('ticket-categories', CategoryController::class);
-
- Route::get('userManagement', [UserManagementController::class, 'index'])->name('userManagement.index');
 
  Route::get('/test-mail', function () {
     Mail::raw('This is a test mail.', function ($message) {

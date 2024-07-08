@@ -21,7 +21,7 @@
     });
 
     function navigateToCreateTicket() {
-        router.push('/userManagement');
+        router.push('/usersManagement');
     }
 
     const showingNavigationDropdown = ref(false);
@@ -100,7 +100,7 @@
                                                     d="M15.75 6a3.75 3.75 0 1 1-7.5 0 3.75 3.75 0 0 1 7.5 0ZM4.501 20.118a7.5 7.5 0 0 1 14.998 0A17.933 17.933 0 0 1 12 21.75c-2.676 0-5.216-.584-7.499-1.632Z" />
                                             </svg>
 
-                                            <Link :href="route('userManagement.index')"
+                                            <Link :href="route('usersManagement.index')"
                                                 class="flex-1 ms-3 whitespace-nowrap">User Management</Link>
 
                                         </a>
