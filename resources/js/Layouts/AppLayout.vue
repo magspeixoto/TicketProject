@@ -5,7 +5,7 @@
     import {
         Head,
         Link,
-        router
+        router, usePage
     } from '@inertiajs/vue3';
     import ApplicationMark from '@/Components/ApplicationMark.vue';
     import Banner from '@/Components/Banner.vue';
@@ -13,6 +13,10 @@
     import DropdownLink from '@/Components/DropdownLink.vue';
     import NavLink from '@/Components/NavLink.vue';
     import ResponsiveNavLink from '@/Components/ResponsiveNavLink.vue';
+
+    const { props } = usePage();
+const auth = props.auth;
+const user = props.user;
 
     import {
         useToast
@@ -61,7 +65,7 @@
             <nav class="bg-white border-b border-gray-100">
                 <!-- Primary Navigation Menu -->
                 <div class="max-w-7xl mx-auto px-4 sm:px-6 lg:px-8">
-                    <div class="flex justify-between h-16">
+                    <div class="flex justify-between h-20">
 
                         <div>
                             <!-- Your existing layout content -->
@@ -70,32 +74,46 @@
 
                         </div>
 
+
                         <button data-drawer-target="logo-sidebar" data-drawer-toggle="logo-sidebar"
                             aria-controls="logo-sidebar" type="button"
-                            class="inline-flex items-center p-2 mt-2 ms-3 text-sm text-gray-500 rounded-lg sm:hidden hover:bg-gray-100 focus:outline-none focus:ring-2 focus:ring-gray-200 dark:text-gray-400 dark:hover:bg-gray-700 dark:focus:ring-gray-600">
+                            class="inline-flex items-center p-1 ms-3 text-sm text-gray-500 rounded-lg sm:hidden hover:bg-gray-100 focus:outline-none focus:ring-2 focus:ring-gray-200 dark:text-gray-400 dark:hover:bg-gray-700 dark:focus:ring-gray-600">
                             <span class="sr-only">Open sidebar</span>
-                            <svg class="w-6 h-6" aria-hidden="true" fill="currentColor" viewBox="0 0 20 20"
+
+                            <svg class="w-20 h-10" aria-hidden="true" fill="currentColor" viewBox="0 0 20 20"
                                 xmlns="http://www.w3.org/2000/svg">
                                 <path clip-rule="evenodd" fill-rule="evenodd"
                                     d="M2 4.75A.75.75 0 012.75 4h14.5a.75.75 0 010 1.5H2.75A.75.75 0 012 4.75zm0 10.5a.75.75 0 01.75-.75h7.5a.75.75 0 010 1.5h-7.5a.75.75 0 01-.75-.75zM2 10a.75.75 0 01.75-.75h14.5a.75.75 0 010 1.5H2.75A.75.75 0 012 10z">
                                 </path>
                             </svg>
                         </button>
-
+                        <button v-if="jetstream && jetstream.managesProfilePhotos"
+                                            class="flex text-sm border-2 border-transparent rounded-full focus:outline-none focus:border-gray-300 transition ">
+                                            <img class="h-8 w-8 rounded-full object-cover"
+                                                :src="auth.user.profile_photo_url" :alt="auth.user.name">
+                                        </button>
                         <aside id="logo-sidebar"
                             class="fixed top-0 left-0 z-40 w-64 h-screen transition-transform -translate-x-full sm:translate-x-0"
                             aria-label="Sidebar">
-                            <div class="h-full px-3 py-4 overflow-y-auto bg-gray-50 dark:bg-gray-950">
-                                <a href="https://flowbite.com/" class="flex items-center ps-2.5 mb-5">
-                                    <img src="../../js/Components/TICKET.IO (2).png" class="h-10 me-10 sm:h-20"
+
+                            <div class="h-full px-3 py-4 overflow-y-auto bg-gray-50 dark:bg-gray-950
+
+" style="margin-right: 40px;">
+                                <a href="/dashboard" class="flex items-center ps-2.5 mb-5">
+                                    <img src="../../js/Components/TICKET.IO (2).png" class="h-20 me-20 sm:h-20"
                                         alt="Flowbite Logo" />
+
                                     <span
                                         class="self-center text-xl font-semibold whitespace-nowrap dark:text-white"></span>
+
                                 </a>
+
+
                                 <ul class="space-y-2 font-medium">
                                     <li>
                                         <a href="#"
                                             class="flex items-center p-2 text-gray-900 rounded-lg dark:text-white hover:bg-gray-100 dark:hover:bg-gray-700 group">
+
                                             <svg class="w-5 h-5 text-gray-500 transition duration-75 dark:text-gray-400 group-hover:text-gray-900 dark:group-hover:text-white"
                                                 aria-hidden="true" xmlns="http://www.w3.org/2000/svg"
                                                 fill="currentColor" viewBox="0 0 22 21">
@@ -212,17 +230,17 @@
                             </div>
 
                             <!-- Settings Dropdown -->
-                            <div class="ms-3 relative">
+                            <div class="ms-3 relative ">
                                 <Dropdown align="right" width="48">
                                     <template #trigger>
                                         <button v-if="jetstream && jetstream.managesProfilePhotos"
-                                            class="flex text-sm border-2 border-transparent rounded-full focus:outline-none focus:border-gray-300 transition">
+                                            class="flex text-sm border-2 border-transparent rounded-full focus:outline-none focus:border-gray-300 transition ">
                                             <img class="h-8 w-8 rounded-full object-cover"
                                                 :src="auth.user.profile_photo_url" :alt="auth.user.name">
                                         </button>
 
                                         <span v-else class="inline-flex rounded-md">
-                                            <button type="button"
+                                            <!-- <button type="button"
                                                 class="inline-flex items-center px-3 py-2 border border-transparent text-sm leading-4 font-medium rounded-md text-gray-500 bg-white hover:text-gray-700 focus:outline-none focus:bg-gray-50 active:bg-gray-50 transition ease-in-out duration-150">
                                                 {{ $page.props.auth.user.name }}
 
@@ -232,7 +250,15 @@
                                                     <path stroke-linecap="round" stroke-linejoin="round"
                                                         d="M19.5 8.25l-7.5 7.5-7.5-7.5" />
                                                 </svg>
-                                            </button>
+                                            </button> -->
+                                            <div class="px-4 py-2">
+
+                                <div class="flex justify-center mt-2">
+                                    <img :src="auth.user.profile_photo_url" alt="User Avatar"
+                                        class="h-10 w-10 rounded-full">
+                                </div>
+                                <div class="flex justify-center text-sm text-gray-600">{{ auth.user.email }}</div>
+                            </div>
                                         </span>
                                     </template>
 
