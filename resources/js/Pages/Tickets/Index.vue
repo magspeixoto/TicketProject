@@ -28,7 +28,7 @@
                         <option value="medium">Medium</option>
                         <option value="high">High</option>
                     </select>
-                    <!-- <select v-for="category in filters.category" v-model="filters.category" @change="handleInput" class="border border-gray-300 text-gray-500 rounded px-10 py-2">
+                    <select v-for="category in filters.category" v-model="filters.category" @change="handleInput" class="border border-gray-300 text-gray-500 rounded px-10 py-2">
 
                         <option>{{ category.name }}</option>
 
@@ -39,13 +39,13 @@
                         type="text"
                         placeholder="By Category"
                         class="border border-gray-300 rounded px-3 py-2"
-                    /> -->
+                    />
                     <select v-model="filters.category" @change="handleInput" class="border border-gray-300 text-gray-500 rounded px-10 py-2">
-      <option value="">By Category</option>
-      <option v-for="category in categories" :key="category.id" :value="category.id">
-        {{ category.name }}
-      </option>
-    </select>
+                        <option value="">By Category</option>
+                        <option v-for="category in categories" :key="category.id" :value="category.id">
+                            {{ category.name }}
+                        </option>
+                    </select>
                     <Link :href="route('tickets.create')" class="bg-gray-950 hover:bg-blue-700 text-white font-bold py-2 px-4 rounded">
                         Create Ticket
                     </Link>

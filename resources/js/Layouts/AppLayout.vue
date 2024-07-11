@@ -67,10 +67,7 @@
                             <!-- Your existing layout content -->
                             <Toast v-if="$page.props.flash?.message" :message="$page.props.flash.message"
                                 :type="$page.props.flash.type" />
-                            <!-- Add this for debugging -->
-                            <div v-if="$page.props.flash?.message">
-                                Debug: {{ $page.props.flash.message }} ({{ $page.props.flash.type }})
-                            </div>
+
                         </div>
 
                         <button data-drawer-target="logo-sidebar" data-drawer-toggle="logo-sidebar"

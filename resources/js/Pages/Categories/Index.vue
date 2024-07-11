@@ -27,7 +27,7 @@
                             <th class="px-6 py-3 text-left text-xs font-medium text-gray-500 uppercase tracking-wider">Name</th>
                             <th class="px-6 py-3 text-left text-xs font-medium text-gray-500 uppercase tracking-wider">Description</th>
                             <th class="px-6 py-3 text-left text-xs font-medium text-gray-500 uppercase tracking-wider">Actions</th>
-                            
+
                         </tr>
                     </thead>
                     <tbody class="bg-white divide-y divide-gray-200">
@@ -35,7 +35,7 @@
                             <td class="px-6 py-4 whitespace-nowrap text-sm font-medium text-gray-900">{{ category.name }}</td>
                             <td class="px-6 py-4 whitespace-nowrap text-sm text-gray-500">{{ category.description }}</td>
                             <td class="px-6 py-4 whitespace-nowrap text-right text-sm font-medium">
-                                
+
                                 <Link :href="route('categories.edit', { category: category.id })" class=" bg-gray-950 text-white rounded-md p-2 ml-3 hover:text-indigo-900">Edit</Link>
                                 <Link method="DELETE" :href="route('categories.destroy', { category: category.id })" class=" bg-gray-950 text-white rounded-md p-2 ml-3 hover:text-indigo-900">Delete</Link>
                             </td>
@@ -47,7 +47,7 @@
                 </div>
             </div>
         </div>
-        
+
     </AppLayout>
 </template>
 
@@ -61,5 +61,6 @@ import Paginate from '@/Components/Paginate.vue';
 const props = defineProps({
     categories: Array,
 });
+
 
 </script>

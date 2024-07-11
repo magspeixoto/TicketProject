@@ -11,10 +11,10 @@ class CategoryController extends Controller
     public function index()
     {
         $categories = Category::all();
-        
+
         return Inertia::render('Categories/Index', [
             'categories' => $categories,
-            
+
         ]);
     }
     public function create()
@@ -33,7 +33,10 @@ class CategoryController extends Controller
             ])
         );
 
-        return redirect()->route('categories.index');
+        return redirect()->route('categories.index')->with([
+            'message' => 'Category created successfully!',
+            'type' => 'success'
+        ]);
     }
 
     public function edit(Category $category)
@@ -52,7 +55,7 @@ class CategoryController extends Controller
             ])
         );
 
-        return redirect()->route('categories.index');
+        return redirect()->route('categories.index')->with('Category updated successfully', 'success');
     }
 
     public function destroy(Category $category)
@@ -60,6 +63,6 @@ class CategoryController extends Controller
         $category->delete();
 
         // Redirect to the same (or previous) page with a flash message
-        return redirect()->route('categories.index');
+        return redirect()->route('categories.index')->with('Ticket deleted successfully', 'error');
     }
 }
