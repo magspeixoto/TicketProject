@@ -11,6 +11,8 @@ use App\Http\Controllers\MailController;
 use App\Http\Controllers\SendMessageController;
 use App\Http\Controllers\TicketController;
 use App\Http\Controllers\UserManagementController;
+use App\Mail\CreateTicketMailbox;
+use App\Mail\TestMail;
 use Illuminate\Foundation\Application;
 use Illuminate\Support\Facades\Mail;
 use Illuminate\Support\Facades\Route;
@@ -71,21 +73,34 @@ Route::middleware(['auth'])->group(function () {
  Route::resource('tickets', TicketController::class);
  Route::resource('ticket-categories', CategoryController::class);
 
- Route::get('/test-mail', function () {
+/*  Route::get('/test-mail', function () {
     Mail::raw('This is a test mail.', function ($message) {
         $message->to('test@example.com')
                 ->subject('Test Mail');
     });
 
     return 'Mail sent!';
+}); */ //this one works
+
+/* Route::post('/incoming-mail', function (Request $request) {
+    $email = (object) $request->all();
+    (new CreateTicketMailbox($email))->build();
+    return response()->json(['message' => 'Email processed successfully']);
 });
-
-Route::post('/laravel-mailbox/{hash}/{from}/{subject}', [MailController::class, '__invoke'])->withoutMiddleware([\App\Http\Middleware\VerifyCsrfToken::class]);
-
-
-
+ */
+/* Route::post('/laravel-mailbox/{hash}/{from}/{subject}', [MailController::class, '__invoke'])->withoutMiddleware([\App\Http\Middleware\VerifyCsrfToken::class]); */
 
 Route::get('/send-test-email', function () {
+    try {
+        Mail::to('test@example.com')->send(new TestMail());
+        return 'Test email sent successfully!';
+    } catch (\Exception $e) {
+        return 'Error sending email: ' . $e->getMessage();
+    }
+});
+
+
+Route::get('/sendemail', function () {
     $to = 'tickets@example.com';
     $subject = 'Teste de Ticket';
     $message = 'Este é um teste de ticket criado a partir do MailHog.';

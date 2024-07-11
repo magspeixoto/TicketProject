@@ -16,10 +16,10 @@ class TicketController extends Controller
     public function index(Request $request)
     {
         /* $tickets = Ticket::with('category')->paginate(10);
-        
+
         return Inertia::render('Tickets/Index', [
             'tickets' => $tickets,
-            
+
         ]); */
         $search = $request->input('search');
         $status = $request->input('status');
@@ -98,7 +98,7 @@ class TicketController extends Controller
 
         return redirect()->route('tickets.index')->with('success', 'Ticket updated successfully.');
     }
-    
+
     public function create()
     {
         $categories = Category::all();
@@ -127,7 +127,11 @@ class TicketController extends Controller
 
         Mail::to(auth()->user()->email)->send(new TicketCreated($ticket));
 
-        return redirect()->route('tickets.index');
+        return redirect()->route('tickets.index')->with([
+            'message' => 'Ticket created successfully!',
+            'type' => 'success'
+        ]);
+
     }
     public function destroy($id)
     {
@@ -139,12 +143,12 @@ class TicketController extends Controller
     public function show($id)
     {
         $ticket = Ticket::with(['category', 'user', 'agent'])->findOrFail($id);
-    $agents = User::where('role', 'agent')->get();
+        $agents = User::where('role', 'agent')->get();
 
-    return Inertia::render('Tickets/Show', [
-        'ticket' => $ticket,
-        'agents' => $agents
-    ]);
+        return Inertia::render('Tickets/Show', [
+            'ticket' => $ticket,
+            'agents' => $agents
+        ]);
     }
 
 }

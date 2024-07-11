@@ -67,7 +67,7 @@ class User extends Authenticatable
     }
     public function messages()
     {
-        return $this->hasMany(Message::class);
+        return $this->hasMany(ChatMessage::class);
     }
     public function articles()
     {
@@ -83,4 +83,5 @@ class User extends Authenticatable
     {
         return $this->hasMany(Comment::class);
     }
+
 }

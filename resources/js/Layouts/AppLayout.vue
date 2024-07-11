@@ -14,6 +14,15 @@
     import NavLink from '@/Components/NavLink.vue';
     import ResponsiveNavLink from '@/Components/ResponsiveNavLink.vue';
 
+    import {
+        useToast
+    } from '@/Composables/useToast';
+    import Toast from '@/Components/Toast.vue';
+
+    const {
+        showToast
+    } = useToast();
+
     defineProps({
         title: String,
         auth: Object,
@@ -38,7 +47,6 @@
         router.post(route('logout'));
     };
 
-
 </script>
 
 <template>
@@ -48,11 +56,22 @@
 
         <Banner />
 
+
         <div class="min-h-screen bg-gray-100">
             <nav class="bg-white border-b border-gray-100">
                 <!-- Primary Navigation Menu -->
                 <div class="max-w-7xl mx-auto px-4 sm:px-6 lg:px-8">
                     <div class="flex justify-between h-16">
+
+                        <div>
+                            <!-- Your existing layout content -->
+                            <Toast v-if="$page.props.flash?.message" :message="$page.props.flash.message"
+                                :type="$page.props.flash.type" />
+                            <!-- Add this for debugging -->
+                            <div v-if="$page.props.flash?.message">
+                                Debug: {{ $page.props.flash.message }} ({{ $page.props.flash.type }})
+                            </div>
+                        </div>
 
                         <button data-drawer-target="logo-sidebar" data-drawer-toggle="logo-sidebar"
                             aria-controls="logo-sidebar" type="button"
@@ -108,12 +127,15 @@
                                     <li>
                                         <a href="#"
                                             class="flex items-center p-2 text-gray-900 rounded-lg dark:text-white hover:bg-gray-100 dark:hover:bg-gray-700 group">
-                                            <svg xmlns="http://www.w3.org/2000/svg" fill="none" viewBox="0 0 24 24" stroke-width="1.5" stroke="currentColor" class="size-6">
-  <path stroke-linecap="round" stroke-linejoin="round" d="m21 7.5-9-5.25L3 7.5m18 0-9 5.25m9-5.25v9l-9 5.25M3 7.5l9 5.25M3 7.5v9l9 5.25m0-9v9" />
-</svg>
+                                            <svg xmlns="http://www.w3.org/2000/svg" fill="none" viewBox="0 0 24 24"
+                                                stroke-width="1.5" stroke="currentColor" class="size-6">
+                                                <path stroke-linecap="round" stroke-linejoin="round"
+                                                    d="m21 7.5-9-5.25L3 7.5m18 0-9 5.25m9-5.25v9l-9 5.25M3 7.5l9 5.25M3 7.5v9l9 5.25m0-9v9" />
+                                            </svg>
 
 
-                                            <Link :href="route('articles.index')" class="flex-1 ms-3 whitespace-nowrap">Knowledge Base</Link>
+                                            <Link :href="route('articles.index')" class="flex-1 ms-3 whitespace-nowrap">
+                                            Knowledge Base</Link>
                                         </a>
                                     </li>
 
@@ -126,7 +148,8 @@
                                                     d="M9 12h3.75M9 15h3.75M9 18h3.75m3 .75H18a2.25 2.25 0 0 0 2.25-2.25V6.108c0-1.135-.845-2.098-1.976-2.192a48.424 48.424 0 0 0-1.123-.08m-5.801 0c-.065.21-.1.433-.1.664 0 .414.336.75.75.75h4.5a.75.75 0 0 0 .75-.75 2.25 2.25 0 0 0-.1-.664m-5.8 0A2.251 2.251 0 0 1 13.5 2.25H15c1.012 0 1.867.668 2.15 1.586m-5.8 0c-.376.023-.75.05-1.124.08C9.095 4.01 8.25 4.973 8.25 6.108V8.25m0 0H4.875c-.621 0-1.125.504-1.125 1.125v11.25c0 .621.504 1.125 1.125 1.125h9.75c.621 0 1.125-.504 1.125-1.125V9.375c0-.621-.504-1.125-1.125-1.125H8.25ZM6.75 12h.008v.008H6.75V12Zm0 3h.008v.008H6.75V15Zm0 3h.008v.008H6.75V18Z" />
                                             </svg>
 
-                                            <Link :href="route('categories.index')" class="flex-1 ms-3 whitespace-nowrap">Categories</Link>
+                                            <Link :href="route('categories.index')"
+                                                class="flex-1 ms-3 whitespace-nowrap">Categories</Link>
                                         </a>
                                     </li>
                                     <li>
@@ -154,7 +177,8 @@
                                                     d="M2.25 12.76c0 1.6 1.123 2.994 2.707 3.227 1.068.157 2.148.279 3.238.364.466.037.893.281 1.153.671L12 21l2.652-3.978c.26-.39.687-.634 1.153-.67 1.09-.086 2.17-.208 3.238-.365 1.584-.233 2.707-1.626 2.707-3.228V6.741c0-1.602-1.123-2.995-2.707-3.228A48.394 48.394 0 0 0 12 3c-2.392 0-4.744.175-7.043.513C3.373 3.746 2.25 5.14 2.25 6.741v6.018Z" />
                                             </svg>
 
-                                            <Link :href="route('chat.index')" class="flex-1 ms-3 whitespace-nowrap">Chat</Link>
+                                            <Link :href="route('chat.index')" class="flex-1 ms-3 whitespace-nowrap">Chat
+                                            </Link>
                                         </a>
                                     </li>
                                     <li>
@@ -195,11 +219,10 @@
                                 <Dropdown align="right" width="48">
                                     <template #trigger>
                                         <button v-if="jetstream && jetstream.managesProfilePhotos"
-                        class="flex text-sm border-2 border-transparent rounded-full focus:outline-none focus:border-gray-300 transition">
-                        <img class="h-8 w-8 rounded-full object-cover"
-                            :src="auth.user.profile_photo_url"
-                            :alt="auth.user.name">
-                    </button>
+                                            class="flex text-sm border-2 border-transparent rounded-full focus:outline-none focus:border-gray-300 transition">
+                                            <img class="h-8 w-8 rounded-full object-cover"
+                                                :src="auth.user.profile_photo_url" :alt="auth.user.name">
+                                        </button>
 
                                         <span v-else class="inline-flex rounded-md">
                                             <button type="button"
