@@ -17,6 +17,7 @@ class Ticket extends Model
         'agent_id',
         'status',
         'priority',
+        'assigned_to'
     ];
 
     public function category()
@@ -42,5 +43,15 @@ class Ticket extends Model
     public function attachments()
     {
         return $this->hasMany(Attachment::class);
+    }
+
+    public function assignTo(User $user)
+    {
+        $this->assigned_to = $user->id;
+        $this->save();
+    }
+    public function assignedAgent()
+    {
+        return $this->belongsTo(User::class, 'assigned_to');
     }
 }

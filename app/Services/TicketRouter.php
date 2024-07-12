@@ -12,15 +12,14 @@ class TicketRouter
         $assignedAgent = $this->findSuitableAgent($ticket);
         if ($assignedAgent) {
             $ticket->assignTo($assignedAgent);
+            return true;
         }
+        return false;
     }
 
     private function findSuitableAgent(Ticket $ticket)
     {
-        return User::whereHas('roles', function ($query) {
-                $query->where('name', 'agent');
-            })
-            ->where('skills', 'like', '%' . $ticket->category . '%')
+        return User::where('role', 'agent')
             ->orderBy('active_tickets_count', 'asc')
             ->first();
     }

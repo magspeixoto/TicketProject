@@ -7,20 +7,78 @@ use App\Models\Category;
 use App\Models\Ticket;
 use App\Models\TicketCategory;
 use App\Models\User;
+use App\Services\TicketRouter;
 use Illuminate\Http\Request;
 use Illuminate\Support\Facades\Mail;
 use Inertia\Inertia;
 
 class TicketController extends Controller
 {
+    protected $ticketRouter;
+
+    public function __construct(TicketRouter $ticketRouter)
+    {
+        $this->ticketRouter = $ticketRouter;
+    }
+    /* public function store(Request $request)
+    {
+        $request->validate([
+            'subject' => 'required|string|max:255',
+            'description' => 'required|string',
+            'priority' => 'required|in:low,medium,high',
+            'category_id' => 'required|exists:categories,id',
+        ]);
+
+        $ticket = Ticket::create([
+            'subject' => $request->subject,
+            'description' => $request->description,
+            'status' => 'open',
+            'priority' => $request->priority,
+            'user_id' => auth()->id(),
+            'category_id' => $request->category_id,
+        ]);
+
+        Mail::to(auth()->user()->email)->send(new TicketCreated($ticket));
+
+        return redirect()->route('tickets.index')->with([
+            'message' => 'Ticket created successfully!',
+            'type' => 'success'
+        ]);
+
+    } */
+
+    public function store(Request $request)
+    {
+        $validated = $request->validate([
+            'subject' => 'required|string|max:255',
+            'description' => 'required|string',
+            'priority' => 'required|in:low,medium,high',
+            'category_id' => 'required|exists:categories,id',
+        ]);
+
+        $ticket = Ticket::create([
+            'subject' => $request->subject,
+            'description' => $request->description,
+            'status' => 'open',
+            'priority' => $request->priority,
+            'user_id' => auth()->id(),
+            'category_id' => $request->category_id,
+        ]);
+
+        $routed = $this->ticketRouter->routeTicket($ticket);
+        Mail::to(auth()->user()->email)->send(new TicketCreated($ticket));
+
+        return Inertia::render('Tickets/Show', [
+            'ticket' => $ticket->load('assignedAgent'),
+            'routed' => $routed,
+        ])->with([
+            'message' => 'Ticket created successfully!',
+            'type' => 'success'
+        ]);
+    }
     public function index(Request $request)
     {
-        /* $tickets = Ticket::with('category')->paginate(10);
 
-        return Inertia::render('Tickets/Index', [
-            'tickets' => $tickets,
-
-        ]); */
         $search = $request->input('search');
         $status = $request->input('status');
         $priority = $request->input('priority');
@@ -106,33 +164,6 @@ class TicketController extends Controller
             'categories' => $categories
         ]);
     }
-
-    public function store(Request $request)
-    {
-        $request->validate([
-            'subject' => 'required|string|max:255',
-            'description' => 'required|string',
-            'priority' => 'required|in:low,medium,high',
-            'category_id' => 'required|exists:categories,id',
-        ]);
-
-        $ticket = Ticket::create([
-            'subject' => $request->subject,
-            'description' => $request->description,
-            'status' => 'open',
-            'priority' => $request->priority,
-            'user_id' => auth()->id(),
-            'category_id' => $request->category_id,
-        ]);
-
-        Mail::to(auth()->user()->email)->send(new TicketCreated($ticket));
-
-        return redirect()->route('tickets.index')->with([
-            'message' => 'Ticket created successfully!',
-            'type' => 'success'
-        ]);
-
-    }
     public function destroy($id)
     {
         $ticket = Ticket::findOrFail($id);
@@ -146,8 +177,8 @@ class TicketController extends Controller
         $agents = User::where('role', 'agent')->get();
 
         return Inertia::render('Tickets/Show', [
-            'ticket' => $ticket,
-            'agents' => $agents
+            'ticket' => $ticket->load('assignedAgent'),
+            'routed' => true, // or whatever value is appropriate
         ]);
     }
 

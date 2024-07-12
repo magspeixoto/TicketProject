@@ -22,7 +22,7 @@
                 </div>
                 <div class="mb-4">
                     <strong class="block text-gray-700 text-sm font-bold mb-2">Category:</strong>
-                    <p class="text-gray-900">{{ ticket.category.name }}</p>
+                    <!-- <p class="text-gray-900">{{ ticket.category.name }}</p> -->
                 </div>
                 <div class="mb-4">
                     <strong class="block text-gray-700 text-sm font-bold mb-2">Created by:</strong>
@@ -40,17 +40,34 @@
                     <strong class="block text-gray-700 text-sm font-bold mb-2">Updated at:</strong>
                     <p class="text-gray-900">{{ new Date(ticket.updated_at).toLocaleString() }}</p>
                 </div>
+
+                <div>
+                    <div>
+    <h1>Ticket: {{ ticket.title }}</h1>
+    <p>Description: {{ ticket.description }}</p>
+    <p>Category: {{ ticket.category }}</p>
+    <p v-if="ticket.assignedAgent">
+      Assigned to: {{ ticket.assignedAgent.name }}
+    </p>
+    <p v-else>
+      Not assigned
+    </p>
+    <p v-if="routed">Ticket was successfully routed.</p>
+    <p v-else>Ticket could not be routed at this time.</p>
+  </div>
+  </div>
+
                 <Link :href="route('tickets.index')" class="inline-block bg-blue-500 hover:bg-blue-700 text-white font-bold py-2 px-4 rounded">
                     Back to Tickets
                 </Link>
-                
+
             </div>
         </div>
     </AppLayout>
 </template>
 
 <script setup>
-import { ref } from 'vue';
+import { ref, computed } from 'vue';
 import { usePage } from '@inertiajs/vue3';
 import { Link } from '@inertiajs/vue3'
 import AppLayout from '@/Layouts/AppLayout.vue';
@@ -58,6 +75,9 @@ import AppLayout from '@/Layouts/AppLayout.vue';
 const props = defineProps({
     ticket: Array,
     agent: Array,
+    routed: Boolean,
 })
-console.log(props);
+const assignedAgentName = computed(() => {
+  return props.ticket.assignedAgent?.name || 'Not assigned';
+});
 </script>
