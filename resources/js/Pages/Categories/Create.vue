@@ -33,7 +33,7 @@
   const props = defineProps({
     categories: Array,
   })
-
+console.log('aqui', props.categories);
 
   const form = ref({
     name: '',

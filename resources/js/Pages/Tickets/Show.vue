@@ -41,22 +41,6 @@
                     <p class="text-gray-900">{{ new Date(ticket.updated_at).toLocaleString() }}</p>
                 </div>
 
-                <div>
-                    <div>
-    <h1>Ticket: {{ ticket.title }}</h1>
-    <p>Description: {{ ticket.description }}</p>
-    <p>Category: {{ ticket.category }}</p>
-    <p v-if="ticket.assignedAgent">
-      Assigned to: {{ ticket.assignedAgent.name }}
-    </p>
-    <p v-else>
-      Not assigned
-    </p>
-    <p v-if="routed">Ticket was successfully routed.</p>
-    <p v-else>Ticket could not be routed at this time.</p>
-  </div>
-  </div>
-
                 <Link :href="route('tickets.index')" class="inline-block bg-blue-500 hover:bg-blue-700 text-white font-bold py-2 px-4 rounded">
                     Back to Tickets
                 </Link>
@@ -75,9 +59,7 @@ import AppLayout from '@/Layouts/AppLayout.vue';
 const props = defineProps({
     ticket: Array,
     agent: Array,
-    routed: Boolean,
+
 })
-const assignedAgentName = computed(() => {
-  return props.ticket.assignedAgent?.name || 'Not assigned';
-});
+
 </script>

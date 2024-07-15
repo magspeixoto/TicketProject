@@ -83,7 +83,6 @@ class User extends Authenticatable
     {
         return $this->hasMany(Comment::class);
     }
-
     public function activeTickets()
     {
         return $this->hasMany(Ticket::class, 'assigned_to')->where('status', '!=', 'closed');

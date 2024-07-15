@@ -66,7 +66,7 @@ const form = ref({
 const submit = () => {
   router.post('/tickets', form.value, {
     onSuccess: () => {
-        showToast('Tickets created successfully!', 'success');
+        showToast('Ticket created successfully!', 'success');
       router.visit('/tickets');
     },
   });

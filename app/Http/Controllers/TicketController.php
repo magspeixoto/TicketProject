@@ -20,7 +20,7 @@ class TicketController extends Controller
     {
         $this->ticketRouter = $ticketRouter;
     }
-    /* public function store(Request $request)
+    public function store(Request $request)
     {
         $request->validate([
             'subject' => 'required|string|max:255',
@@ -45,11 +45,11 @@ class TicketController extends Controller
             'type' => 'success'
         ]);
 
-    } */
+    }
 
-    public function store(Request $request)
+    /* public function store(Request $request)
     {
-        $validated = $request->validate([
+        $request->validate([
             'subject' => 'required|string|max:255',
             'description' => 'required|string',
             'priority' => 'required|in:low,medium,high',
@@ -64,6 +64,7 @@ class TicketController extends Controller
             'user_id' => auth()->id(),
             'category_id' => $request->category_id,
         ]);
+        dd($ticket);
 
         $routed = $this->ticketRouter->routeTicket($ticket);
         Mail::to(auth()->user()->email)->send(new TicketCreated($ticket));
@@ -75,7 +76,7 @@ class TicketController extends Controller
             'message' => 'Ticket created successfully!',
             'type' => 'success'
         ]);
-    }
+    } */
     public function index(Request $request)
     {
 
