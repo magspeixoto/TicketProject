@@ -7,6 +7,8 @@ use App\Models\Category;
 use App\Models\Ticket;
 use App\Models\TicketCategory;
 use App\Models\User;
+use App\Providers\MailSlurpServiceProvider;
+use App\Services\MailSlurpService;
 use App\Services\TicketRouter;
 use Illuminate\Http\Request;
 use Illuminate\Support\Facades\Mail;
@@ -15,11 +17,14 @@ use Inertia\Inertia;
 class TicketController extends Controller
 {
     protected $ticketRouter;
+    protected $mailSlurpService;
 
-    public function __construct(TicketRouter $ticketRouter)
+    public function __construct(TicketRouter $ticketRouter, MailSlurpService $mailSlurpService)
     {
         $this->ticketRouter = $ticketRouter;
+        $this->mailSlurpService = $mailSlurpService;
     }
+
     public function store(Request $request)
     {
         $request->validate([
@@ -37,6 +42,7 @@ class TicketController extends Controller
             'user_id' => auth()->id(),
             'category_id' => $request->category_id,
         ]);
+
 
         Mail::to(auth()->user()->email)->send(new TicketCreated($ticket));
 

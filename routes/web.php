@@ -135,3 +135,8 @@ Route::middleware('auth')->group(function () {
 
     Route::get('/dashboard', [DashboardController::class, 'index'])->middleware(['auth', 'verified'])->name('dashboard');
 });
+
+
+//temporary routes for testing Mailslurp
+
+
