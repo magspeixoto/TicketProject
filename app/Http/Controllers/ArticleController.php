@@ -13,22 +13,28 @@ class ArticleController extends Controller
     {
         $articles = Article::with('category')->get();
 
-        return Inertia::render
-        ('Articles/Index', [
+        return Inertia::render('Articles/Index', [
             'articles' => $articles,
-            ]);
+        ]);
+    }
+
+    public function edit(Article $article)
+    {
+        $categories = Category::all();
+
+        return Inertia::render('Articles/Edit', [
+            'article' => $article,
+            'categories' => $categories,
+        ]);
     }
 
     public function show($id)
     {
-        /* $ticket = Ticket::with(['category', 'user', 'agent'])->findOrFail($id);
-    $agents = User::where('role', 'agent')->get(); */
+        $article = Article::with(['category'])->findOrFail($id);
 
-
-    return Inertia::render('Articles/Show', [
-        'ticket' => $ticket,
-        
-    ]);
+        return Inertia::render('Articles/Show', [
+            'article' => $article,
+        ]);
     }
 
     public function store(Request $request)
@@ -39,10 +45,11 @@ class ArticleController extends Controller
             'category_id' => 'required|exists:categories,id',
             'user_id' => 'required|exists:users,id',
             'is_published' => 'boolean',
-            'priority' => 'required|in:low,medium,high',
         ]);
 
-        return Article::create($validated);
+        $article = Article::create($validated);
+
+        return redirect()->route('articles.index')->with('success', 'Article created successfully.');
     }
 
     public function update(Request $request, $id)
@@ -55,12 +62,11 @@ class ArticleController extends Controller
             'category_id' => 'sometimes|required|exists:categories,id',
             'user_id' => 'sometimes|required|exists:users,id',
             'is_published' => 'boolean',
-            'priority' => 'sometimes|required|in:low,medium,high',
         ]);
 
         $article->update($validated);
 
-        return $article;
+        return redirect()->route('articles.index')->with('success', 'Article updated successfully.');
     }
 
     public function destroy($id)
@@ -68,17 +74,15 @@ class ArticleController extends Controller
         $article = Article::findOrFail($id);
         $article->delete();
 
-        return response()->noContent();
+        return redirect()->route('articles.index')->with('success', 'Article deleted successfully.');
     }
 
     public function create()
     {
         $categories = Category::all();
-        $articles = Article::all();
 
         return Inertia::render('Articles/Create', [
             'categories' => $categories,
-            'articles' => $articles,
         ]);
     }
 }

@@ -1,18 +1,15 @@
 <template>
     <AppLayout>
-        <div class="max-w-2xl mx-auto py-10 sm:px-6 lg:px-8">
-            <h1 class="text-2xl font-semibold text-gray-900 mb-6">Create Article</h1>
+        <div class="max-w-4xl mx-auto py-10 sm:px-6 lg:px-8">
+            <h1 class="text-3xl font-semibold text-gray-900 mb-6">Edit Article</h1>
             <form @submit.prevent="submit" class="bg-white shadow-md rounded-lg px-8 pt-6 pb-8 mb-4">
                 <div class="mb-4">
                     <label for="title" class="block text-gray-700 text-sm font-bold mb-2">Title</label>
-                    <input type="text" v-model="form.title" id="title"
-                        class="shadow appearance-none border rounded w-full py-2 px-3 text-gray-700 leading-tight focus:outline-none focus:shadow-outline">
+                    <input type="text" v-model="form.title" id="title" class="shadow appearance-none border rounded w-full py-2 px-3 text-gray-700 leading-tight focus:outline-none focus:shadow-outline">
                 </div>
                 <div class="mb-4">
                     <label for="content" class="block text-gray-700 text-sm font-bold mb-2">Content</label>
-                    <textarea v-model="form.content" id="content"
-                        class="shadow appearance-none border rounded w-full py-2 px-3 text-gray-700 leading-tight focus:outline-none focus:shadow-outline"
-                        rows="4"></textarea>
+                    <textarea v-model="form.content" id="content" class="shadow appearance-none border rounded w-full py-2 px-3 text-gray-700 leading-tight focus:outline-none focus:shadow-outline" rows="4"></textarea>
                 </div>
                 <div class="mb-4">
                     <label for="category_id" class="block text-gray-700 text-sm font-bold mb-2">Category</label>
@@ -23,11 +20,9 @@
                         </option>
                     </select>
                 </div>
-
                 <div class="flex items-center justify-between">
-                    <button type="submit"
-                        class="bg-blue-500 hover:bg-blue-700 text-white font-bold py-2 px-4 rounded focus:outline-none focus:shadow-outline">
-                        Create
+                    <button type="submit" class="bg-blue-500 hover:bg-blue-700 text-white font-bold py-2 px-4 rounded focus:outline-none focus:shadow-outline">
+                        Update
                     </button>
                 </div>
             </form>
@@ -38,20 +33,23 @@
 <script setup>
 import { ref } from 'vue';
 import { usePage, router } from '@inertiajs/vue3';
-import AppLayout from '../../Layouts/AppLayout.vue';
+import AppLayout from '@/Layouts/AppLayout.vue';
 
-const { props } = usePage(); // Use usePage to access props
-
-const form = ref({
-    title: '',
-    content: '',
-    category_id: null,
+const props = defineProps({
+    article: Object,
+    categories: Array,
 });
 
-const categories = props.categories || [];
+const form = ref({
+    title: props.article?.title || '',
+    content: props.article?.content || '',
+    category_id: props.article?.category_id || null,
+});
+
+console.log('Form data:', form.value);
 
 const submit = () => {
-    router.post(route('articles.store'), form.value, {
+    router.put(route('articles.update', { article: props.article.id }), form.value, {
         onSuccess: () => {
             router.visit(route('articles.index'));
         },

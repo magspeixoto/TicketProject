@@ -45,12 +45,13 @@ class UserManagementController extends Controller
 
     public function update(Request $request, User $user)
     {
-        $user->update(
-            $request->validate([
-                'name' => 'required',
-                'email' => 'required',
-            ])
-        );
+        $request->validate([
+            'name' => 'required|string|max:255',
+            'email' => 'required|email|max:255',
+            'role' => 'required|string|max:255', // Assuming 'role' is also required
+        ]);
+
+        $user->update($request->only('name', 'email', 'role'));
 
         return redirect()->route('usersManagement.index');
     }

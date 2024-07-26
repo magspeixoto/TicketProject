@@ -4,7 +4,7 @@ use App\Http\Controllers\AdminMessageReplyController;
 use App\Http\Controllers\ArticleController;
 use App\Http\Controllers\AttachmentController;
 use App\Http\Controllers\CategoryController;
-use App\Http\Controllers\ChatController;
+
 use App\Http\Controllers\CommentController;
 use App\Http\Controllers\DashboardController;
 use App\Http\Controllers\MailController;
@@ -61,6 +61,7 @@ Route::middleware(['auth'])->group(function () {
     Route::get('/articles/{article}/edit', [ArticleController::class, 'edit'])->name('articles.edit');
     Route::put('/articles/{article}', [ArticleController::class, 'update'])->name('articles.update');
     Route::delete('/articles/{article}', [ArticleController::class, 'destroy'])->name('articles.destroy');
+    Route::get('/articles/{id}', [ArticleController::class, 'show'])->name('articles.show');
 
     Route::get('/usersManagement', [UserManagementController::class, 'index'])->name('usersManagement.index');
     Route::get('/usersManagement/create', [UserManagementController::class, 'create'])->name('usersManagement.create');
@@ -131,14 +132,6 @@ Route::middleware('auth')->group(function () {
 
 Route::middleware('auth')->group(function () {
 
-    Route::resource('chatRooms', ChatController::class)->only(['index', 'show']);
 
-Route::post('/chat-rooms/{chatRoom}/send-message', [ChatController::class, 'sendMessage'])->name('send-message');
-
-    Route::post('send-message', SendMessageController::class)->name('send-message');
-    Route::post('admin-reply/{chatRoom}', AdminMessageReplyController::class)->name('admin-reply');
-
-    Route::get('/chat-rooms', [ChatController::class, 'index'])->name('chat.index');
-    Route::get('/chat-rooms/{chat-room}', [ChatController::class, 'show'])->name('chat.show');
     Route::get('/dashboard', [DashboardController::class, 'index'])->middleware(['auth', 'verified'])->name('dashboard');
 });

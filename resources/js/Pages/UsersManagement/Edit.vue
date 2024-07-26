@@ -62,9 +62,9 @@
     import AppLayout from '@/Layouts/AppLayout.vue';
 
     const props = defineProps({
-        user: Array,
+        user: Object,
     })
-    console.log(props);
+    console.log('User prop:', props.user);
 
     const form = ref({
         name: props.user.name,
@@ -73,13 +73,11 @@
     });
 
     const submit = () => {
-        router.put(route('usersManagement.update', {
-            category: props.user.id
-        }), form.value, {
-            onSuccess: () => {
-                router.visit(route('usersManagement.index'));
-            },
-        });
-    };
+    router.put(route('usersManagement.update', props.user.id), form.value, {
+        onSuccess: () => {
+            router.visit(route('usersManagement.index'));
+        },
+    });
+};
 
 </script>
