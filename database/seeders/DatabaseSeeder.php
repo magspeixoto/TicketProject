@@ -35,6 +35,6 @@ class DatabaseSeeder extends Seeder
             'email' => 'user@user.com',
             'is_admin' => false
         ]);
-        
+
     }
 }

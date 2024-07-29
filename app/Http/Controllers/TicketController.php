@@ -7,8 +7,7 @@ use App\Models\Category;
 use App\Models\Ticket;
 use App\Models\TicketCategory;
 use App\Models\User;
-use App\Providers\MailSlurpServiceProvider;
-use App\Services\MailSlurpService;
+
 use App\Services\TicketRouter;
 use Illuminate\Http\Request;
 use Illuminate\Support\Facades\Mail;
@@ -16,14 +15,6 @@ use Inertia\Inertia;
 
 class TicketController extends Controller
 {
-    protected $ticketRouter;
-    protected $mailSlurpService;
-
-    public function __construct(TicketRouter $ticketRouter, MailSlurpService $mailSlurpService)
-    {
-        $this->ticketRouter = $ticketRouter;
-        $this->mailSlurpService = $mailSlurpService;
-    }
 
     public function store(Request $request)
     {
@@ -52,37 +43,6 @@ class TicketController extends Controller
         ]);
 
     }
-
-    /* public function store(Request $request)
-    {
-        $request->validate([
-            'subject' => 'required|string|max:255',
-            'description' => 'required|string',
-            'priority' => 'required|in:low,medium,high',
-            'category_id' => 'required|exists:categories,id',
-        ]);
-
-        $ticket = Ticket::create([
-            'subject' => $request->subject,
-            'description' => $request->description,
-            'status' => 'open',
-            'priority' => $request->priority,
-            'user_id' => auth()->id(),
-            'category_id' => $request->category_id,
-        ]);
-        dd($ticket);
-
-        $routed = $this->ticketRouter->routeTicket($ticket);
-        Mail::to(auth()->user()->email)->send(new TicketCreated($ticket));
-
-        return Inertia::render('Tickets/Show', [
-            'ticket' => $ticket->load('assignedAgent'),
-            'routed' => $routed,
-        ])->with([
-            'message' => 'Ticket created successfully!',
-            'type' => 'success'
-        ]);
-    } */
     public function index(Request $request)
     {
 

@@ -1,3 +1,0 @@
-mkdir mailu
-cd mailu
-curl -O https://mailu.io/1.9/mailu.env
