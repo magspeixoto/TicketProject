@@ -4,17 +4,7 @@
             <div class="flex justify-between items-center mb-6">
                 <h1 class="text-2xl font-semibold text-gray-900">Knowledge Base</h1>
                 <div class="flex items-center">
-                    <div class="relative">
-                        <input
-                            v-model="searchQuery"
-                            type="text"
-                            placeholder="Search articles..."
-                            class="pl-10 pr-4 py-2 border border-gray-300 rounded"
-                        />
-                        <span class="absolute inset-y-0 left-0 pl-3 flex items-center">
-                            <MagnifyingGlass></MagnifyingGlass>
-                        </span>
-                    </div>
+
                     <Link :href="route('articles.create')" class="bg-gray-950 hover:bg-blue-700 text-white font-bold py-2 px-4 rounded ml-4">
                         Create Article
                     </Link>

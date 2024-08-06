@@ -74,23 +74,6 @@ Route::middleware(['auth'])->group(function () {
  Route::resource('tickets', TicketController::class);
  Route::resource('ticket-categories', CategoryController::class);
 
-/*  Route::get('/test-mail', function () {
-    Mail::raw('This is a test mail.', function ($message) {
-        $message->to('test@example.com')
-                ->subject('Test Mail');
-    });
-
-    return 'Mail sent!';
-}); */ //this one works
-
-/* Route::post('/incoming-mail', function (Request $request) {
-    $email = (object) $request->all();
-    (new CreateTicketMailbox($email))->build();
-    return response()->json(['message' => 'Email processed successfully']);
-});
- */
-/* Route::post('/laravel-mailbox/{hash}/{from}/{subject}', [MailController::class, '__invoke'])->withoutMiddleware([\App\Http\Middleware\VerifyCsrfToken::class]); */
-
 Route::get('/send-test-email', function () {
     try {
         Mail::to('test@example.com')->send(new TestMail());
@@ -129,10 +112,4 @@ Route::middleware('auth')->group(function () {
     Route::apiResource('comments', CommentController::class);
     Route::apiResource('attachments', AttachmentController::class);
 });
-
-
-
-
-//temporary routes for testing Mailslurp
-
 
