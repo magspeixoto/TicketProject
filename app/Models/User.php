@@ -4,6 +4,7 @@ namespace App\Models;
 
 // use Illuminate\Contracts\Auth\MustVerifyEmail;
 use Illuminate\Database\Eloquent\Factories\HasFactory;
+use Illuminate\Database\Eloquent\Relations\HasMany;
 use Illuminate\Foundation\Auth\User as Authenticatable;
 use Illuminate\Notifications\Notifiable;
 use Laravel\Fortify\TwoFactorAuthenticatable;
@@ -65,27 +66,26 @@ class User extends Authenticatable
             'password' => 'hashed',
         ];
     }
-    public function messages()
-    {
-        return $this->hasMany(ChatMessage::class);
-    }
     public function articles()
     {
         return $this->hasMany(Article::class);
     }
-
-    public function tickets()
+    public function activeTickets()
+    {
+        return $this->hasMany(Ticket::class, 'assigned_to')->where('status', '!=', 'closed');
+    }
+    public function tickets(): HasMany
     {
         return $this->hasMany(Ticket::class);
     }
 
-    public function comments()
+    public function isAgent(): bool
     {
-        return $this->hasMany(Comment::class);
+        return $this->role === 'agent';
     }
-    public function activeTickets()
+    public function isAdmin(): bool
     {
-        return $this->hasMany(Ticket::class, 'assigned_to')->where('status', '!=', 'closed');
+        return $this->role === 'admin';
     }
 
 }

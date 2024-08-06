@@ -34,9 +34,6 @@ class TicketController extends Controller
             'category_id' => $request->category_id,
         ]);
 
-
-        Mail::to(auth()->user()->email)->send(new TicketCreated($ticket));
-
         return redirect()->route('tickets.index')->with([
             'message' => 'Ticket created successfully!',
             'type' => 'success'

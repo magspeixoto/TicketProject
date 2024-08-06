@@ -4,6 +4,7 @@ namespace App\Models;
 
 use Illuminate\Database\Eloquent\Factories\HasFactory;
 use Illuminate\Database\Eloquent\Model;
+use Illuminate\Support\Facades\Log;
 
 class Ticket extends Model
 {
@@ -53,5 +54,33 @@ class Ticket extends Model
     public function assignedAgent()
     {
         return $this->belongsTo(User::class, 'assigned_to');
+    }
+
+    protected static function booted()
+    {
+        static::created(function ($ticket) {
+            self::routeTicket($ticket);
+        });
+    }
+
+    protected static function routeTicket($ticket)
+    {
+        $agent = self::findAvailableAgent();
+        if ($agent) {
+            $ticket->agent_id = $agent->id;
+            $ticket->save();
+
+            // Marque o agente como ocupado (não implementado diretamente, exemplo)
+            // $agent->markAsBusy();
+        } else {
+            Log::warning("No available agents to assign the ticket.");
+        }
+    }
+
+    protected static function findAvailableAgent()
+    {
+        return User::where('role', 'agent')
+            ->inRandomOrder()
+            ->first();
     }
 }
