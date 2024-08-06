@@ -104,7 +104,6 @@ const user = props.user;
                                     <span class="self-center text-xl font-semibold whitespace-nowrap dark:text-white"></span>
                                 </a>
 
-
                                 <ul class="space-y-2 font-medium">
                                     <li>
                                         <a href="#"

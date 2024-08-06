@@ -109,7 +109,5 @@ Route::middleware('auth')->group(function () {
     Route::apiResource('categories', CategoryController::class);
     Route::apiResource('articles', ArticleController::class);
     Route::apiResource('tickets', TicketController::class);
-    Route::apiResource('comments', CommentController::class);
-    Route::apiResource('attachments', AttachmentController::class);
 });
 
