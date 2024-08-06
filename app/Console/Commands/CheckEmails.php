@@ -21,9 +21,7 @@ class CheckEmails extends Command
 
     public function handle()
     {
-        $inboxId = '108366f2-11f5-4092-bc24-1b6fb948a28f';
-
-        $emails = $this->mailSlurpService->getEmails($inboxId);
+        $emails = $this->mailSlurpService->getEmails();
 
         foreach ($emails as $email) {
             Ticket::updateOrCreate(
@@ -38,3 +36,4 @@ class CheckEmails extends Command
         $this->info('Checked for new emails and updated tickets.');
     }
 }
+

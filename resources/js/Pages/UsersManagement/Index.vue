@@ -4,10 +4,6 @@
             <div class="flex justify-between items-center mb-6">
                 <h1 class="text-2xl font-semibold text-gray-900">Users</h1>
                 <div class="flex items-center">
-
-                    <Link :href="route('categories.create')" class="bg-gray-950 hover:bg-blue-700 text-white font-bold py-2 px-4 rounded ml-4">
-                        Create User
-                    </Link>
                 </div>
             </div>
             <div class="bg-white shadow-md rounded-lg overflow-hidden">

@@ -74,16 +74,6 @@ Route::middleware(['auth'])->group(function () {
  Route::resource('tickets', TicketController::class);
  Route::resource('ticket-categories', CategoryController::class);
 
-Route::get('/send-test-email', function () {
-    try {
-        Mail::to('test@example.com')->send(new TestMail());
-        return 'Test email sent successfully!';
-    } catch (\Exception $e) {
-        return 'Error sending email: ' . $e->getMessage();
-    }
-});
-
-
 Route::get('/sendemail', function () {
     $to = 'tickets@example.com';
     $subject = 'Teste de Ticket';
