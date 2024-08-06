@@ -100,7 +100,7 @@ const user = props.user;
 
 " style="margin-right: 40px;">
                                 <a href="/dashboard" class="flex items-center ps-2.5 mb-5">
-                                    <img src="../../js/Components/TICKET.IO (2).png" class="h-30 me-30 sm:h-40" alt="Flowbite Logo" />
+                                    <img src="../../js/Components/TICKET.IO (2).png" class="h-40 me-40 sm:h-40" alt="Flowbite Logo" />
                                     <span class="self-center text-xl font-semibold whitespace-nowrap dark:text-white"></span>
                                 </a>
 
