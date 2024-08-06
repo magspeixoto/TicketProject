@@ -2,35 +2,34 @@
 
 namespace App\Services;
 
-use MailSlurp\ApiClient;
 use MailSlurp\Configuration;
 use MailSlurp\Api\InboxControllerApi;
-use MailSlurp\Configuration as MailSlurpConfig;
+use MailSlurp\ApiClient;
 use MailSlurp\Model\InboxDto;
+use MailSlurp\Model\EmailDto;
 
 class MailSlurpService
 {
-    protected $client;
     protected $inboxApi;
 
     public function __construct()
     {
-        $config = MailSlurpConfig::getDefaultConfiguration()
+        $config = Configuration::getDefaultConfiguration()
             ->setApiKey('apiKey', config('mailslurp.api_key'));
 
-        $this->client = new ApiClient($config);
-        $this->inboxApi = new InboxControllerApi($this->client);
+        $client = new ApiClient($config);
+        $this->inboxApi = new InboxControllerApi($client);
     }
 
     public function getInbox()
     {
-        return $this->inboxApi->getInbox();
+        $inboxes = $this->inboxApi->getInboxes();
+        return $inboxes[0];
     }
 
-    public function getEmails()
+    public function getEmails($inboxId)
     {
-        // Add implementation to get emails
+        $emails = $this->inboxApi->getEmails($inboxId);
+        return $emails;
     }
-
-    // Other MailSlurp related methods...
 }
