@@ -4,30 +4,43 @@
 
 namespace App\Services;
 
-use MailSlurp\Api\InboxControllerApi;
-use MailSlurp\Api\MailServerControllerApi;
-use MailSlurp\Configuration;
+use GuzzleHttp\Client;
+use GuzzleHttp\Exception\RequestException;
+use Illuminate\Support\Facades\Log;
 
 class MailSlurpService
 {
-    protected $inboxController;
-    protected $mailServerController;
+    protected $client;
 
     public function __construct()
     {
-        $config = Configuration::getDefaultConfiguration()->setApiKey('x-api-key', env('MAILSLURP_API_KEY'));
-        $this->inboxController = new InboxControllerApi(null, $config);
-        $this->mailServerController = new MailServerControllerApi(null, $config);
+        $this->client = new Client([
+            'base_uri' => 'https://api.mailslurp.com/',
+            'headers' => [
+                'Authorization' => 'Bearer fb24cebd860d10483b1226d8895d23fdd25aa33d0b2c7b7b8a67553cb86baa65',
+                'Content-Type' => 'application/json',
+            ],
+        ]);
     }
 
-    public function createInbox()
+    public function createWebhook($inboxId, $url)
     {
-        return $this->inboxController->createInbox();
-    }
+        try {
+            $response = $this->client->post('webhooks', [
+                'json' => [
+                    'name' => 'New Ticket Webhook',
+                    'inboxId' => $inboxId,
+                    'url' => $url,
+                    'eventName' => 'EMAIL_RECEIVED'
+                ],
+            ]);
 
-    public function getEmails($inboxId)
-    {
-        return $this->mailServerController->getEmails($inboxId);
+            return json_decode($response->getBody(), true);
+        } catch (RequestException $e) {
+            $errorResponse = $e->getResponse();
+            $errorBody = $errorResponse ? (string)$errorResponse->getBody() : 'No response body';
+            throw new \Exception("Error creating webhook: " . $errorBody);
+        }
     }
 }
 

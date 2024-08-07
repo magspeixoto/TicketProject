@@ -11,6 +11,7 @@ use App\Http\Controllers\MailController;
 use App\Http\Controllers\SendMessageController;
 use App\Http\Controllers\TicketController;
 use App\Http\Controllers\UserManagementController;
+use App\Http\Controllers\WebhookController;
 use App\Mail\CreateTicketMailbox;
 use App\Mail\TestMail;
 use App\Services\MailSlurpService;
@@ -102,7 +103,18 @@ Route::middleware('auth')->group(function () {
     Route::apiResource('tickets', TicketController::class);
 });
 
-Route::get('/create-inbox', function (MailSlurpService $mailSlurpService) {
-    $inbox = $mailSlurpService->createInbox();
-    return response()->json($inbox);
+
+Route::post('/webhook', [WebhookController::class, 'handle']);
+
+
+
+use Illuminate\Support\Facades\Log;
+
+Route::get('/setup-webhook', function () {
+    $mailSlurpService = new MailSlurpService();
+    $inboxId = '7f45df38-631a-4843-bde0-3f41c0939246'; // Substitua pelo ID da sua caixa de entrada
+    $webhookUrl = 'https://deac-109-50-169-188.ngrok-free.app/webhook'; // Substitua pela URL do ngrok
+
+    $response = $mailSlurpService->createWebhook($inboxId, $webhookUrl);
+    return response()->json($response);
 });
