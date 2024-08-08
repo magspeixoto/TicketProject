@@ -21,10 +21,15 @@
                             <td class="px-6 py-4 whitespace-nowrap text-sm font-medium text-gray-900">{{ user.name }}</td>
                             <td class="px-6 py-4 whitespace-nowrap text-sm text-gray-500">{{ user.email }}</td>
                             <td class="px-6 py-4 whitespace-nowrap text-sm text-gray-500">{{ user.role }}</td>
-                            <td class="px-6 py-4 whitespace-nowrap text-right text-sm font-medium">
-
-                                <Link :href="route('usersManagement.edit', { user: user.id })" class=" bg-gray-950 text-white rounded-md p-2 ml-3 hover:text-indigo-900">Edit</Link>
-                                <Link method="DELETE" :href="route('usersManagement.destroy', { user: user.id })" class=" bg-gray-950 text-white rounded-md p-2 ml-3 hover:text-indigo-900">Delete</Link>
+                            <td class="px-6 py-4 whitespace-nowrap text-right text-sm font-medium flex items-center space-x-2">
+                                <Link :href="route('usersManagement.edit', { user: user.id })" class="text-blue-600 hover:text-blue-700 flex items-center">
+                                    <PencilSquareIcon class="w-5 h-5 mr-1 text-blue-600 hover:text-blue-700" />
+                                    Edit
+                                </Link>
+                                <Link method="delete" :href="route('usersManagement.destroy', { user: user.id })" class="text-red-600 hover:text-red-700 flex items-center">
+                                    <TrashIcon class="w-5 h-5 mr-1 text-red-600 hover:text-red-700" />
+                                    Delete
+                                </Link>
                             </td>
                         </tr>
                     </tbody>
@@ -34,7 +39,6 @@
                 </div>
             </div>
         </div>
-
     </AppLayout>
 </template>
 
@@ -42,12 +46,10 @@
 import { ref, computed } from 'vue';
 import AppLayout from '@/Layouts/AppLayout.vue';
 import { Link } from '@inertiajs/vue3';
-import MagnifyingGlass from '../../Components/MagnifyingGlass.vue';
-import Paginate from '@/Components/Paginate.vue';
+import { PencilSquareIcon, TrashIcon } from '@heroicons/vue/24/outline';
 
 const props = defineProps({
     users: Array,
 });
 
 </script>
-

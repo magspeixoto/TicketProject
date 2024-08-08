@@ -10,32 +10,32 @@
                             @input="handleInput"
                             type="text"
                             placeholder="Search tickets..."
-                            class="pl-10 pr-4 py-2 border border-gray-300 rounded"
+                            class="pl-10 pr-4 py-2 border border-gray-300 rounded-lg focus:ring-2 focus:ring-blue-500 focus:border-blue-500"
                         />
-                        <span class="absolute inset-y-0 left-0 pl-3 flex items-center">
-                            <MagnifyingGlass />
+                        <span class="absolute inset-y-0 left-0 pl-3 flex items-center pointer-events-none">
+                            <MagnifyingGlassIcon class="w-5 h-5 text-gray-500" />
                         </span>
                     </div>
-                    <select v-model="filters.status" @change="handleInput" class="border border-gray-300 text-gray-500 rounded px-10 py-2">
-                        <option value="" >By Statuses</option>
+                    <select v-model="filters.status" @change="handleInput" class="border border-gray-300 text-gray-500 rounded-lg px-10 py-2 focus:ring-2 focus:ring-blue-500 focus:border-blue-500">
+                        <option value="">By Statuses</option>
                         <option value="open">Open</option>
                         <option value="in_progress">In Progress</option>
                         <option value="closed">Closed</option>
                     </select>
-                    <select v-model="filters.priority" @change="handleInput" class="border border-gray-300 text-gray-500 rounded px-10 py-2">
+                    <select v-model="filters.priority" @change="handleInput" class="border border-gray-300 text-gray-500 rounded-lg px-10 py-2 focus:ring-2 focus:ring-blue-500 focus:border-blue-500">
                         <option value="">By Priorities</option>
                         <option value="low">Low</option>
                         <option value="medium">Medium</option>
                         <option value="high">High</option>
                     </select>
-                    
-                    <select v-model="filters.category" @change="handleInput" class="border border-gray-300 text-gray-500 rounded px-10 py-2">
-      <option value="">By Category</option>
-      <option v-for="category in categories" :key="category.id" :value="category.id">
-        {{ category.name }}
-      </option>
-    </select>
-                    <Link :href="route('tickets.create')" class="bg-gray-950 hover:bg-blue-700 text-white font-bold py-2 px-4 rounded">
+                    <select v-model="filters.category" @change="handleInput" class="border border-gray-300 text-gray-500 rounded-lg px-10 py-2 focus:ring-2 focus:ring-blue-500 focus:border-blue-500">
+                        <option value="">By Category</option>
+                        <option v-for="category in categories" :key="category.id" :value="category.id">
+                            {{ category.name }}
+                        </option>
+                    </select>
+                    <Link :href="route('tickets.create')" class="bg-blue-600 hover:bg-blue-700 text-white font-bold py-2 px-4 rounded-lg flex items-center">
+                        <PlusIcon class="w-5 h-5 mr-2 text-white" />
                         Create Ticket
                     </Link>
                 </div>
@@ -57,9 +57,15 @@
                             <td class="px-6 py-4 whitespace-nowrap text-sm text-gray-500">{{ ticket.status }}</td>
                             <td class="px-6 py-4 whitespace-nowrap text-sm text-gray-500">{{ ticket.priority }}</td>
                             <td class="px-6 py-4 whitespace-nowrap text-sm text-gray-500">{{ ticket.category }}</td>
-                            <td class="px-6 py-4 whitespace-nowrap text-right text-sm font-medium">
-                                <Link :href="`/tickets/${ticket.id}`" class="bg-gray-950 text-white rounded-md p-2 hover:bg-blue-600">View</Link>
-                                <Link :href="route('tickets.edit', { ticket: ticket.id })" class="bg-gray-950 text-white rounded-md p-2 ml-3 hover:bg-blue-600">Edit</Link>
+                            <td class="px-6 py-4 whitespace-nowrap text-right text-sm font-medium flex items-center space-x-2">
+                                <Link :href="`/tickets/${ticket.id}`" class="text-blue-600 hover:text-blue-800 flex items-center">
+                                    <EyeIcon class="w-5 h-5 mr-1 text-blue-600 hover:text-blue-800" />
+                                    View
+                                </Link>
+                                <Link :href="route('tickets.edit', { ticket: ticket.id })" class="text-yellow-500 hover:text-yellow-700 flex items-center">
+                                    <PencilSquareIcon class="w-5 h-5 mr-1 text-yellow-500 hover:text-yellow-700" />
+                                    Edit
+                                </Link>
                             </td>
                         </tr>
                     </tbody>
@@ -81,7 +87,7 @@ import { debounce } from 'lodash';
 import AppLayout from '@/Layouts/AppLayout.vue';
 import { Link, usePage } from '@inertiajs/vue3';
 import { router } from '@inertiajs/vue3';
-import MagnifyingGlass from '../../Components/MagnifyingGlass.vue';
+import { MagnifyingGlassIcon, PlusIcon, EyeIcon, PencilSquareIcon } from '@heroicons/vue/24/outline';
 import Paginate from '@/Components/Paginate.vue';
 
 const { props } = usePage();

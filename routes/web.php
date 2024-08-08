@@ -108,7 +108,6 @@ Route::post('/webhook', [WebhookController::class, 'handle']);
 
 
 
-use Illuminate\Support\Facades\Log;
 
 Route::get('/setup-webhook', function () {
     $mailSlurpService = new MailSlurpService();

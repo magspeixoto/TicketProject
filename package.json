@@ -21,6 +21,7 @@
         "vue": "^3.3.13"
     },
     "dependencies": {
+        "@heroicons/vue": "^2.1.5",
         "lodash": "^4.17.21",
         "mailslurp-client": "^15.20.2"
     }
