@@ -18,5 +18,9 @@ return new class extends Migration
         Schema::table('tickets', function (Blueprint $table) {
             $table->string('subject')->change();
         });
+        Schema::table('tickets', function (Blueprint $table) {
+            $table->foreignId('sla_id')->constrained('slas');
+            $table->foreignId('priority_id')->constrained('ticket_priorities');
+        });
     }
 };

@@ -1,6 +1,6 @@
 <template>
     <AppLayout>
-        <div class="max-w-7xl mx-auto py-10 sm:px-6 lg:px-20">
+        <div class="max-w-8xl mx-auto py-10 sm:px-6 lg:px-20 ">
             <div class="flex justify-between items-center mb-6">
                 <h1 class="text-2xl font-semibold text-gray-900">Tickets</h1>
                 <div class="flex items-center space-x-4">
@@ -34,6 +34,13 @@
                             {{ category.name }}
                         </option>
                     </select>
+                    <!-- New SLA Filter -->
+                    <select v-model="filters.sla" @change="handleInput" class="filter-select">
+                            <option value="">By SLA</option>
+                            <option v-for="sla in slas" :key="sla.id" :value="sla.id">
+                                {{ sla.name }}
+                            </option>
+                        </select>
                     <Link :href="route('tickets.create')" class="bg-blue-600 hover:bg-blue-700 text-white font-bold py-2 px-4 rounded-lg flex items-center">
                         <PlusIcon class="w-5 h-5 mr-2 text-white" />
                         Create Ticket
@@ -48,6 +55,8 @@
                             <th class="px-6 py-3 text-left text-xs font-medium text-gray-500 uppercase tracking-wider">Status</th>
                             <th class="px-6 py-3 text-left text-xs font-medium text-gray-500 uppercase tracking-wider">Priority</th>
                             <th class="px-6 py-3 text-left text-xs font-medium text-gray-500 uppercase tracking-wider">Category</th>
+                            <th class="px-6 py-3 text-left text-xs font-medium text-gray-500 uppercase tracking-wider">Response Time</th>
+                            <th class="px-6 py-3 text-left text-xs font-medium text-gray-500 uppercase tracking-wider">Resolution Time</th>
                             <th class="px-6 py-3 text-left text-xs font-medium text-gray-500 uppercase tracking-wider">Actions</th>
                         </tr>
                     </thead>
@@ -57,6 +66,8 @@
                             <td class="px-6 py-4 whitespace-nowrap text-sm text-gray-500">{{ ticket.status }}</td>
                             <td class="px-6 py-4 whitespace-nowrap text-sm text-gray-500">{{ ticket.priority }}</td>
                             <td class="px-6 py-4 whitespace-nowrap text-sm text-gray-500">{{ ticket.category }}</td>
+                            <td class="px-6 py-4 whitespace-nowrap text-sm text-gray-500">{{ responseDueTime }}</td>
+                            <td class="px-6 py-4 whitespace-nowrap text-sm text-gray-500">{{ resolutionDueTime }}</td>
                             <td class="px-6 py-4 whitespace-nowrap text-right text-sm font-medium flex items-center space-x-2">
                                 <Link :href="`/tickets/${ticket.id}`" class="text-blue-600 hover:text-blue-800 flex items-center">
                                     <EyeIcon class="w-5 h-5 mr-1 text-blue-600 hover:text-blue-800" />
@@ -117,4 +128,28 @@ const handleInput = () => {
 watch(filters, () => {
     search();
 }, { deep: true });
+
+import { computed } from 'vue';
+
+// Simula dados fornecidos por uma API ou prop
+const ticket = {
+  title: 'Primary SLA',
+  description: 'Exemplo de Descrição',
+  priority: {
+    name: 'High'
+  },
+  sla: {
+    name: 'SLA'
+  },
+  response_due_time: new Date(Date.now() + 3600 * 1000), // 1 hora a partir de agora
+  resolution_due_time: new Date(Date.now() + 7200 * 1000) // 2 horas a partir de agora
+};
+
+const responseDueTime = computed(() => {
+  return new Date(ticket.response_due_time).toLocaleString();
+});
+
+const resolutionDueTime = computed(() => {
+  return new Date(ticket.resolution_due_time).toLocaleString();
+});
 </script>

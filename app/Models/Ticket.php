@@ -17,6 +17,8 @@ class Ticket extends Model
         'user_id',
         'agent_id',
         'status',
+        'sla_id',
+        'priority_id',
         'priority',
         'assigned_to'
     ];
@@ -71,5 +73,25 @@ class Ticket extends Model
         return User::where('role', 'agent')
             ->inRandomOrder()
             ->first();
+    }
+
+    public function sla()
+    {
+        return $this->belongsTo(Sla::class);
+    }
+
+    public function priority()
+    {
+        return $this->belongsTo(Priority::class);
+    }
+
+    public function getResponseDueTimeAttribute()
+    {
+        return $this->created_at->addMinutes($this->sla->response_time);
+    }
+
+    public function getResolutionDueTimeAttribute()
+    {
+        return $this->created_at->addMinutes($this->sla->resolution_time);
     }
 }
