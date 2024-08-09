@@ -106,7 +106,7 @@ Route::middleware('auth')->group(function () {
 });
 
 
-
+//create inbox and webhook
 Route::get('/mailslurp/create-inbox', [MailslurpController::class, 'createInbox']);
 Route::get('/mailslurp/setup-webhook/{inboxId}', [MailslurpController::class, 'setupWebhook']);
 Route::post('/mailslurp/webhook', [MailslurpController::class, 'handleEmailWebhook'])->name('mailslurp.webhook');
