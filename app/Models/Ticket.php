@@ -36,16 +36,6 @@ class Ticket extends Model
         return $this->belongsTo(User::class, 'agent_id');
     }
 
-    public function comments()
-    {
-        return $this->hasMany(Comment::class);
-    }
-
-    public function attachments()
-    {
-        return $this->hasMany(Attachment::class);
-    }
-
     public function assignTo(User $user)
     {
         $this->assigned_to = $user->id;
