@@ -13,8 +13,7 @@
                 </div>
                 <div class="mb-4">
                     <label for="category_id" class="block text-gray-700 text-sm font-bold mb-2">Category</label>
-                    <select v-model="form.category_id" id="category_id"
-                        class="block appearance-none w-full bg-white border border-gray-400 hover:border-gray-500 px-4 py-2 pr-8 rounded shadow leading-tight focus:outline-none focus:shadow-outline">
+                    <select v-model="form.category_id" id="category_id" class="block appearance-none w-full bg-white border border-gray-400 hover:border-gray-500 px-4 py-2 pr-8 rounded shadow leading-tight focus:outline-none focus:shadow-outline">
                         <option v-for="category in categories" :value="category.id" :key="category.id">
                             {{ category.name }}
                         </option>
@@ -45,8 +44,6 @@ const form = ref({
     content: props.article?.content || '',
     category_id: props.article?.category_id || null,
 });
-
-console.log('Form data:', form.value);
 
 const submit = () => {
     router.put(route('articles.update', { article: props.article.id }), form.value, {

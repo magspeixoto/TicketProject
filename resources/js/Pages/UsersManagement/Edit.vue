@@ -9,16 +9,14 @@
                         class="shadow appearance-none border rounded w-full py-2 px-3 text-gray-700 leading-tight focus:outline-none focus:shadow-outline">
                 </div>
                 <div class="mb-4">
-                    <label for="description" class="block text-gray-700 text-sm font-bold mb-2">Email</label>
-                    <textarea v-model="form.email" id="description"
-                        class="shadow appearance-none border rounded w-full py-2 px-3 text-gray-700 leading-tight focus:outline-none focus:shadow-outline"
-                        rows="4"></textarea>
+                    <label for="email" class="block text-gray-700 text-sm font-bold mb-2">Email</label>
+                    <input type="email" v-model="form.email" id="email"
+                        class="shadow appearance-none border rounded w-full py-2 px-3 text-gray-700 leading-tight focus:outline-none focus:shadow-outline">
                 </div>
                 <div class="mb-4">
-                    <label for="description" class="block text-gray-700 text-sm font-bold mb-2">Password</label>
-                    <input v-model="form.password" id="description"
-                        class="shadow appearance-none border rounded w-full py-2 px-3 text-gray-700 leading-tight focus:outline-none focus:shadow-outline"
-                        rows="4"></input>
+                    <label for="password" class="block text-gray-700 text-sm font-bold mb-2">Password</label>
+                    <input type="password" v-model="form.password" id="password"
+                        class="shadow appearance-none border rounded w-full py-2 px-3 text-gray-700 leading-tight focus:outline-none focus:shadow-outline">
                 </div>
                 <div class="mb-4">
                     <label class="block text-gray-700 text-sm font-bold mb-2">Role</label>
@@ -43,8 +41,6 @@
                         class="bg-blue-500 hover:bg-blue-700 text-white font-bold py-2 px-4 rounded focus:outline-none focus:shadow-outline">
                         Update
                     </button>
-
-
                 </div>
             </form>
         </div>
@@ -52,32 +48,27 @@
 </template>
 
 <script setup>
-    import {
-        ref
-    } from 'vue';
-    import {
-        usePage,
-        router
-    } from '@inertiajs/vue3';
-    import AppLayout from '@/Layouts/AppLayout.vue';
+import { ref } from 'vue';
+import { usePage, router } from '@inertiajs/vue3';
+import AppLayout from '@/Layouts/AppLayout.vue';
 
-    const props = defineProps({
-        user: Object,
-    })
-    console.log('User prop:', props.user);
+const props = defineProps({
+    user: Object,
+});
+console.log('User prop:', props.user);
 
-    const form = ref({
-        name: props.user.name,
-        email: props.user.email,
-        role: props.user.role,
-    });
+const form = ref({
+    name: props.user.name,
+    email: props.user.email,
+    password: '',
+    role: props.user.role,
+});
 
-    const submit = () => {
+const submit = () => {
     router.put(route('usersManagement.update', props.user.id), form.value, {
         onSuccess: () => {
             router.visit(route('usersManagement.index'));
         },
     });
 };
-
 </script>

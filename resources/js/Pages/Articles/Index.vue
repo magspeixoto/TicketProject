@@ -1,8 +1,8 @@
 <template>
     <AppLayout>
         <div class="max-w-7xl mx-auto py-10 sm:px-6 lg:px-10">
-            <div class="flex justify-between items-center mb-6">
-                <h1 class="text-2xl font-semibold text-gray-900">Knowledge Base</h1>
+            <div class="flex flex-col sm:flex-row justify-between items-center mb-6">
+                <h1 class="text-2xl font-semibold text-gray-900 mb-4 sm:mb-0">Knowledge Base</h1>
                 <div class="flex items-center">
                     <Link :href="route('articles.create')" class="bg-blue-600 hover:bg-blue-700 text-white font-bold py-2 px-4 rounded-lg flex items-center">
                         <PlusIcon class="w-5 h-5 mr-2 text-white" />
@@ -57,7 +57,7 @@ const props = defineProps({
 });
 
 function truncateContent(content) {
-    const maxLength = 50; // Define o comprimento máximo do conteúdo
+    const maxLength = 50; // Define the maximum length of the content
     return content.length > maxLength ? content.substring(0, maxLength) + "..." : content;
 }
 </script>

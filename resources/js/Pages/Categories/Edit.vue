@@ -11,12 +11,10 @@
                     <label for="description" class="block text-gray-700 text-sm font-bold mb-2">Description</label>
                     <textarea v-model="form.description" id="description" class="shadow appearance-none border rounded w-full py-2 px-3 text-gray-700 leading-tight focus:outline-none focus:shadow-outline" rows="4"></textarea>
                 </div>
-
                 <div class="flex items-center justify-between">
                     <button type="submit" class="bg-blue-500 hover:bg-blue-700 text-white font-bold py-2 px-4 rounded focus:outline-none focus:shadow-outline">
                         Update
                     </button>
-
                 </div>
             </form>
         </div>
@@ -29,8 +27,8 @@ import { usePage, router } from '@inertiajs/vue3';
 import AppLayout from '@/Layouts/AppLayout.vue';
 
 const props = defineProps({
-    category: Array,
-})
+    category: Object,
+});
 
 const form = ref({
     name: props.category.name,

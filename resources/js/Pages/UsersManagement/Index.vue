@@ -51,5 +51,4 @@ import { PencilSquareIcon, TrashIcon } from '@heroicons/vue/24/outline';
 const props = defineProps({
     users: Array,
 });
-
 </script>
