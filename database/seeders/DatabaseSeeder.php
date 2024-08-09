@@ -22,10 +22,7 @@ class DatabaseSeeder extends Seeder
             CategoriesTableSeeder::class,
             ArticleSeeder::class,
             TicketsTableSeeder::class,
-            CommentSeeder::class,
-            AttachmentSeeder::class,
-            ChatRoomSeeder::class,
-            ChatMessageSeeder::class,
+
         ]);
         User::factory()->create([
             'name' => 'Test Admin',
@@ -37,7 +34,7 @@ class DatabaseSeeder extends Seeder
             'email' => 'user@user.com',
             'is_admin' => false
         ]);
-        // Create roles
+        /* // Create roles
         $administrator = Role::create(['name' => 'Administrator']);
         $manager = Role::create(['name' => 'Manager']);
         $agent = Role::create(['name' => 'Agent']);
@@ -78,6 +75,6 @@ class DatabaseSeeder extends Seeder
         ]);
         $customer->givePermissionTo([
             'create tickets', 'read own tickets', 'add comments',
-        ]);
+        ]); */
     }
 }

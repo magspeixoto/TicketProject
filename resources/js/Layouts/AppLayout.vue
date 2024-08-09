@@ -5,18 +5,18 @@
     import {
         Head,
         Link,
-        router, usePage
+        router,
+        usePage
     } from '@inertiajs/vue3';
-    import ApplicationMark from '@/Components/ApplicationMark.vue';
     import Banner from '@/Components/Banner.vue';
     import Dropdown from '@/Components/Dropdown.vue';
     import DropdownLink from '@/Components/DropdownLink.vue';
-    import NavLink from '@/Components/NavLink.vue';
-    import ResponsiveNavLink from '@/Components/ResponsiveNavLink.vue';
 
-    const { props } = usePage();
-const auth = props.auth;
-const user = props.user;
+    const {
+        props
+    } = usePage();
+    const auth = props.auth;
+    const user = props.user;
 
     import {
         useToast
@@ -88,10 +88,10 @@ const user = props.user;
                             </svg>
                         </button>
                         <button v-if="jetstream && jetstream.managesProfilePhotos"
-                                            class="flex text-sm border-2 border-transparent rounded-full focus:outline-none focus:border-gray-300 transition ">
-                                            <img class="h-8 w-8 rounded-full object-cover"
-                                                :src="auth.user.profile_photo_url" :alt="auth.user.name">
-                                        </button>
+                            class="flex text-sm border-2 border-transparent rounded-full focus:outline-none focus:border-gray-300 transition ">
+                            <img class="h-8 w-8 rounded-full object-cover" :src="auth.user.profile_photo_url"
+                                :alt="auth.user.name">
+                        </button>
                         <aside id="logo-sidebar"
                             class="fixed top-0 left-0 z-40 w-64 h-screen transition-transform -translate-x-full sm:translate-x-0"
                             aria-label="Sidebar">
@@ -100,8 +100,10 @@ const user = props.user;
 
 " style="margin-right: 40px;">
                                 <a href="/dashboard" class="flex items-center ps-2.5 mb-5">
-                                    <img src="../../js/Components/TICKET.IO (2).png" class="h-40 me-40 sm:h-40" alt="Flowbite Logo" />
-                                    <span class="self-center text-xl font-semibold whitespace-nowrap dark:text-white"></span>
+                                    <img src="../../js/Components/TICKET.IO (2).png" class="h-40 me-40 sm:h-40"
+                                        alt="loho" />
+                                    <span
+                                        class="self-center text-xl font-semibold whitespace-nowrap dark:text-white"></span>
                                 </a>
 
                                 <ul class="space-y-2 font-medium">
@@ -197,13 +199,6 @@ const user = props.user;
 
                         <div class="p-4 sm:ml-64">
                         </div>
-
-
-
-
-
-
-
                         <div class="hidden sm:flex sm:items-center sm:ms-6">
                             <div class="ms-3 relative">
                                 <!-- Teams Dropdown -->
@@ -221,25 +216,15 @@ const user = props.user;
                                         </button>
 
                                         <span v-else class="inline-flex rounded-md">
-                                            <!-- <button type="button"
-                                                class="inline-flex items-center px-3 py-2 border border-transparent text-sm leading-4 font-medium rounded-md text-gray-500 bg-white hover:text-gray-700 focus:outline-none focus:bg-gray-50 active:bg-gray-50 transition ease-in-out duration-150">
-                                                {{ $page.props.auth.user.name }}
-
-                                                <svg class="ms-2 -me-0.5 h-4 w-4" xmlns="http://www.w3.org/2000/svg"
-                                                    fill="none" viewBox="0 0 24 24" stroke-width="1.5"
-                                                    stroke="currentColor">
-                                                    <path stroke-linecap="round" stroke-linejoin="round"
-                                                        d="M19.5 8.25l-7.5 7.5-7.5-7.5" />
-                                                </svg>
-                                            </button> -->
                                             <div class="px-4 py-2">
 
-                                <div class="flex justify-center mt-2">
-                                    <img :src="auth.user.profile_photo_url" alt="User Avatar"
-                                        class="h-10 w-10 rounded-full">
-                                </div>
-                                <div class="flex justify-center text-sm text-gray-600">{{ auth.user.email }}</div>
-                            </div>
+                                                <div class="flex justify-center mt-2">
+                                                    <img :src="auth.user.profile_photo_url" alt="User Avatar"
+                                                        class="h-10 w-10 rounded-full">
+                                                </div>
+                                                <div class="flex justify-center text-sm text-gray-600">
+                                                    {{ auth.user.email }}</div>
+                                            </div>
                                         </span>
                                     </template>
 
@@ -259,13 +244,6 @@ const user = props.user;
                                         </DropdownLink> -->
 
                                         <div class="border-t border-gray-200" />
-
-                                        <!-- Authentication -->
-                                        <!-- <form @submit.prevent="logout">
-                                            <DropdownLink as="button">
-                                                Log Out
-                                            </DropdownLink>
-                                        </form> -->
                                     </template>
                                 </Dropdown>
                             </div>
