@@ -48,7 +48,7 @@ class UserManagementController extends Controller
         $request->validate([
             'name' => 'required|string|max:255',
             'email' => 'required|email|max:255',
-            'role' => 'required|string|max:255', // Assuming 'role' is also required
+            'role' => 'required|string|max:255',
         ]);
 
         $user->update($request->only('name', 'email', 'role'));
@@ -60,7 +60,7 @@ class UserManagementController extends Controller
     {
         $user->delete();
 
-        // Redirect to the same (or previous) page with a flash message
+
         return redirect()->route('usersManagement.index');
     }
 }

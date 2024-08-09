@@ -64,7 +64,7 @@ class TicketController extends Controller
                     if ($category !== '') {
                         $query->where('category_id', $category);
                     }
-                    /* $query->where('name', 'like', "%{$category}%"); */
+
                 });
             })
             ->paginate(10)
@@ -142,7 +142,7 @@ class TicketController extends Controller
 
         return Inertia::render('Tickets/Show', [
             'ticket' => $ticket->load('assignedAgent'),
-            'routed' => true, // or whatever value is appropriate
+            'routed' => true,
         ]);
     }
 

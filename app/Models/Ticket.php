@@ -63,6 +63,7 @@ class Ticket extends Model
         });
     }
 
+    //ticket Routing without criteria
     protected static function routeTicket($ticket)
     {
         $agent = self::findAvailableAgent();
@@ -70,8 +71,6 @@ class Ticket extends Model
             $ticket->agent_id = $agent->id;
             $ticket->save();
 
-            // Marque o agente como ocupado (não implementado diretamente, exemplo)
-            // $agent->markAsBusy();
         } else {
             Log::warning("No available agents to assign the ticket.");
         }

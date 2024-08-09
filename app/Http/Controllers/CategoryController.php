@@ -62,7 +62,6 @@ class CategoryController extends Controller
     {
         $category->delete();
 
-        // Redirect to the same (or previous) page with a flash message
         return redirect()->route('categories.index')->with('Ticket deleted successfully', 'error');
     }
 }
