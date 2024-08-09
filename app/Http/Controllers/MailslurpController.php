@@ -2,13 +2,12 @@
 
 namespace App\Http\Controllers;
 
-use App\Models\Category;
-use Illuminate\Http\Request;
-use MailSlurp\Apis\InboxControllerApi;
+use App\Http\Controllers\Controller;
 use App\Models\Ticket;
-use App\Models\User;
+use Illuminate\Http\Request;
 use Illuminate\Support\Facades\Http;
 use Illuminate\Support\Facades\Log;
+use MailSlurp\Apis\InboxControllerApi;
 
 class MailslurpController extends Controller
 {
@@ -26,84 +25,59 @@ class MailslurpController extends Controller
     }
 
     public function setupWebhook($inboxId)
-    {
-        try {
-            $webhookUrl = route('mailslurp.webhook');
-            Log::info('Setting up webhook', ['url' => $webhookUrl, 'inboxId' => $inboxId]);
-
-            $apiKey = env('MAILSLURP_API_KEY');
-            $response = Http::withHeaders([
-                'x-api-key' => $apiKey
-            ])->post("https://api.mailslurp.com/inboxes/{$inboxId}/webhooks", [
-                'url' => $webhookUrl,
-                'eventName' => 'EMAIL_RECEIVED',
-            ]);
-
-            Log::info('Webhook setup response', ['status' => $response->status(), 'body' => $response->body()]);
-
-            if ($response->successful()) {
-                $webhookData = $response->json();
-                return response()->json(['webhookId' => $webhookData['id']]);
-            } else {
-                Log::error('Failed to setup webhook', ['status' => $response->status(), 'body' => $response->body()]);
-                return response()->json(['error' => 'Failed to setup webhook', 'details' => $response->json()], 500);
-            }
-        } catch (\Exception $e) {
-            Log::error('Exception while setting up webhook', ['message' => $e->getMessage()]);
-            return response()->json(['error' => 'Failed to setup webhook', 'details' => $e->getMessage()], 500);
-        }
-    }
-
-    public function handleEmailWebhook(Request $request)
-    {
-        Log::info('Received webhook', ['payload' => $request->all()]);
-
-    $emailData = $request->input('emailDto');
-
-    if (!$emailData) {
-        Log::error('No email data received in webhook');
-        return response()->json(['error' => 'No email data received'], 400);
-    }
-
+{
     try {
-        $ticket = Ticket::create([
-            'subject' => $emailData['subject'] ?? 'No Subject',
-            'description' => $emailData['body'] ?? $emailData['text'] ?? 'No Content',
-            'user_id' => $this->getUserIdFromEmail($emailData['from'] ?? ''),
-            'status' => 'open',
-            'priority' => 'medium',
-            'category_id' => $this->getDefaultCategoryId(),
+        // Validate the inboxId as a UUID
+        if (!filter_var($inboxId, FILTER_VALIDATE_REGEXP, ["options" => ["regexp" => "/^[0-9a-fA-F]{8}-[0-9a-fA-F]{4}-[0-9a-fA-F]{4}-[0-9a-fA-F]{4}-[0-9a-fA-F]{12}$/"]])) {
+            throw new \InvalidArgumentException("Invalid UUID for inboxId");
+        }
+
+        $webhookUrl = route('mailslurp.webhook');
+
+        // Replace 'your_api_key' with your actual MailSlurp key
+        $apiKey = env('MAILSLURP_API_KEY');
+
+        $response = Http::withHeaders([
+            'x-api-key' => $apiKey
+        ])->post("https://api.mailslurp.com/inboxes/{$inboxId}/webhooks", [
+            'url' => $webhookUrl,
         ]);
 
-        Log::info('Ticket created from email', ['ticket_id' => $ticket->id]);
+        // Log the response for debugging
+        Log::info('Webhook setup response: ' . $response->body());
 
-        return response()->json(['status' => 'success', 'ticket_id' => $ticket->id]);
+        if ($response->successful()) {
+            $responseData = $response->json();
+            if (isset($responseData['id'])) {
+                return response()->json(['webhookId' => $responseData['id']]);
+            } else {
+                Log::error('Error setting up webhook: Undefined array key "id"');
+                return response()->json(['error' => 'Failed to set up webhook'], 500);
+            }
+        } else {
+            Log::error('Failed to set up webhook: ' . $response->body());
+            return response()->json(['error' => 'Failed to set up webhook'], 500);
+        }
     } catch (\Exception $e) {
-        Log::error('Failed to create ticket from email', ['error' => $e->getMessage()]);
-        return response()->json(['error' => 'Failed to process email'], 500);
-    }
-    }
-
-    private function getUserIdFromEmail($email)
-    {
-        // Extract email address from the "from" field
-        preg_match('/([^<]+@[^>]+)/', $email, $matches);
-        $emailAddress = $matches[1] ?? $email;
-
-        // Find or create user based on email address
-        $user = User::firstOrCreate(
-            ['email' => $emailAddress],
-            ['name' => explode('@', $emailAddress)[0]] // Use part before @ as name
-        );
-
-        return $user->id;
-    }
-
-    private function getDefaultCategoryId()
-    {
-        // Implement logic to get a default category ID
-        // For example, return the ID of a "General" category
-        return Category::where('name', 'General')->first()->id ?? null;
+        Log::error('Error setting up webhook: ' . $e->getMessage());
+        return response()->json(['error' => 'Failed to set up webhook'], 500);
     }
 }
 
+    public function handleEmailWebhook(Request $request)
+    {
+        // Handle the incoming email webhook
+        // Example: Create a new ticket based on the email content
+        $email = $request->input('email');
+        $subject = $email['subject'];
+        $body = $email['body'];
+
+        // Create a new ticket
+        $ticket = new Ticket();
+        $ticket->subject = $subject;
+        $ticket->body = $body;
+        $ticket->save();
+
+        return response()->json(['message' => 'Webhook handled successfully']);
+    }
+}
