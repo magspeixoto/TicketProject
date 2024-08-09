@@ -9,6 +9,7 @@ use App\Http\Controllers\CommentController;
 use App\Http\Controllers\DashboardController;
 use App\Http\Controllers\EmailController;
 use App\Http\Controllers\MailController;
+use App\Http\Controllers\MailslurpController;
 use App\Http\Controllers\SendMessageController;
 use App\Http\Controllers\TicketController;
 use App\Http\Controllers\UserManagementController;
@@ -104,3 +105,7 @@ Route::middleware('auth')->group(function () {
     Route::apiResource('tickets', TicketController::class);
 });
 
+
+Route::get('/mailslurp/create-inbox', [MailslurpController::class, 'createInbox']);
+Route::get('/mailslurp/setup-webhook/{inboxId}', [MailslurpController::class, 'setupWebhook']);
+Route::post('/mailslurp/webhook', [MailslurpController::class, 'handleEmailWebhook'])->name('mailslurp.webhook');
