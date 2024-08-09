@@ -264,23 +264,23 @@
         },
         {
             "name": "dasprid/enum",
-            "version": "1.0.5",
+            "version": "1.0.6",
             "source": {
                 "type": "git",
                 "url": "https://github.com/DASPRiD/Enum.git",
-                "reference": "6faf451159fb8ba4126b925ed2d78acfce0dc016"
+                "reference": "8dfd07c6d2cf31c8da90c53b83c026c7696dda90"
             },
             "dist": {
                 "type": "zip",
-                "url": "https://api.github.com/repos/DASPRiD/Enum/zipball/6faf451159fb8ba4126b925ed2d78acfce0dc016",
-                "reference": "6faf451159fb8ba4126b925ed2d78acfce0dc016",
+                "url": "https://api.github.com/repos/DASPRiD/Enum/zipball/8dfd07c6d2cf31c8da90c53b83c026c7696dda90",
+                "reference": "8dfd07c6d2cf31c8da90c53b83c026c7696dda90",
                 "shasum": ""
             },
             "require": {
                 "php": ">=7.1 <9.0"
             },
             "require-dev": {
-                "phpunit/phpunit": "^7 | ^8 | ^9",
+                "phpunit/phpunit": "^7 || ^8 || ^9 || ^10 || ^11",
                 "squizlabs/php_codesniffer": "*"
             },
             "type": "library",
@@ -308,9 +308,9 @@
             ],
             "support": {
                 "issues": "https://github.com/DASPRiD/Enum/issues",
-                "source": "https://github.com/DASPRiD/Enum/tree/1.0.5"
+                "source": "https://github.com/DASPRiD/Enum/tree/1.0.6"
             },
-            "time": "2023-08-25T16:18:39+00:00"
+            "time": "2024-08-09T14:30:48+00:00"
         },
         {
             "name": "dflydev/dot-access-data",
@@ -2959,30 +2959,31 @@
         },
         {
             "name": "php-imap/php-imap",
-            "version": "2.0.3",
+            "version": "2.2.5",
             "source": {
                 "type": "git",
                 "url": "https://github.com/barbushin/php-imap.git",
-                "reference": "cc1a49a3f68090db182183c59ffbc09055d59f5b"
+                "reference": "3be0a7e1fbd99c4fd35b3ae3e90b130d44520b5d"
             },
             "dist": {
                 "type": "zip",
-                "url": "https://api.github.com/repos/barbushin/php-imap/zipball/cc1a49a3f68090db182183c59ffbc09055d59f5b",
-                "reference": "cc1a49a3f68090db182183c59ffbc09055d59f5b",
+                "url": "https://api.github.com/repos/barbushin/php-imap/zipball/3be0a7e1fbd99c4fd35b3ae3e90b130d44520b5d",
+                "reference": "3be0a7e1fbd99c4fd35b3ae3e90b130d44520b5d",
                 "shasum": ""
             },
             "require": {
+                "ext-imap": "*",
                 "php": ">=5.3.0"
             },
             "type": "library",
             "autoload": {
-                "psr-0": {
-                    "PhpImap": "src/"
+                "psr-4": {
+                    "PhpImap\\": "src/PhpImap/"
                 }
             },
             "notification-url": "https://packagist.org/downloads/",
             "license": [
-                "BSD 3-Clause"
+                "MIT"
             ],
             "authors": [
                 {
@@ -2991,18 +2992,21 @@
                     "homepage": "http://linkedin.com/in/barbushin"
                 }
             ],
-            "description": "PHP class to access mailbox by POP3/IMAP/NNTP using IMAP extension",
+            "description": "Manage mailboxes, filter/get/delete emails in PHP (supports IMAP/POP3/NNTP)",
             "homepage": "https://github.com/barbushin/php-imap",
             "keywords": [
                 "imap",
                 "mail",
-                "php"
+                "mailbox",
+                "php",
+                "pop3",
+                "receive emails"
             ],
             "support": {
                 "issues": "https://github.com/barbushin/php-imap/issues",
                 "source": "https://github.com/barbushin/php-imap/tree/master"
             },
-            "time": "2015-09-16T07:40:39+00:00"
+            "time": "2017-10-06T05:49:25+00:00"
         },
         {
             "name": "phpoption/phpoption",
